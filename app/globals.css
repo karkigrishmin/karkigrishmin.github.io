@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+/* Custom CSS variables - MUST be defined OUTSIDE @layer for @theme inline to work */
+:root {
+  /* Light mode custom variables */
+  --ds-background: rgb(255 255 255);
+  --ds-secondary-bg: rgb(243 244 246);
+  --ds-foreground: rgb(17 24 39);
+  --ds-muted-foreground: rgb(107 114 128);
+  --ds-primary: rgb(59 130 246);
+  --ds-primary-hover: rgb(37 99 235);
+  --ds-primary-foreground: rgb(255 255 255);
+  --ds-accent: rgb(139 92 246);
+  --ds-accent-hover: rgb(124 58 237);
+  --ds-accent-foreground: rgb(255 255 255);
+  --ds-border: rgb(229 231 235);
+  --ds-card-bg: rgb(249 250 251);
+}
+
+[data-theme="dark"] {
+  /* Dark mode custom variables */
+  --ds-background: rgb(15 23 42);
+  --ds-secondary-bg: rgb(30 41 59);
+  --ds-foreground: rgb(241 245 249);
+  --ds-muted-foreground: rgb(203 213 225);
+  --ds-primary: rgb(96 165 250);
+  --ds-primary-hover: rgb(59 130 246);
+  --ds-primary-foreground: rgb(255 255 255);
+  --ds-accent: rgb(167 139 250);
+  --ds-accent-hover: rgb(139 92 246);
+  --ds-accent-foreground: rgb(255 255 255);
+  --ds-border: rgb(51 65 85);
+  --ds-card-bg: rgb(30 41 59);
+}
+
+/* Tailwind CSS 4 @theme inline - References custom variables for utility generation */
+@theme inline {
+  /* Background colors for bg-* utilities */
+  --color-background: var(--ds-background);
+  --color-secondary: var(--ds-secondary-bg);
+  --color-card: var(--ds-card-bg);
+
+  /* Foreground/text colors for text-* utilities */
+  --color-foreground: var(--ds-foreground);
+  --color-muted: var(--ds-muted-foreground);
+  --color-muted-foreground: var(--ds-muted-foreground);
+
+  /* Brand colors */
+  --color-primary: var(--ds-primary);
+  --color-primary-hover: var(--ds-primary-hover);
+  --color-primary-foreground: var(--ds-primary-foreground);
+  --color-accent: var(--ds-accent);
+  --color-accent-hover: var(--ds-accent-hover);
+  --color-accent-foreground: var(--ds-accent-foreground);
+
+  /* Border colors */
+  --color-border: var(--ds-border);
+}
+
+/* Base styles - Semantic aliases for component usage */
+@layer base {
+  /* Semantic variable aliases for use in components with var(--background) */
+  :root {
+    --background: var(--ds-background);
+    --secondary-bg: var(--ds-secondary-bg);
+    --foreground: var(--ds-foreground);
+    --muted-foreground: var(--ds-muted-foreground);
+    --primary: var(--ds-primary);
+    --primary-hover: var(--ds-primary-hover);
+    --primary-foreground: var(--ds-primary-foreground);
+    --accent: var(--ds-accent);
+    --accent-hover: var(--ds-accent-hover);
+    --accent-foreground: var(--ds-accent-foreground);
+    --border: var(--ds-border);
+    --card-bg: var(--ds-card-bg);
+  }
+
+  [data-theme="dark"] {
+    --background: var(--ds-background);
+    --secondary-bg: var(--ds-secondary-bg);
+    --foreground: var(--ds-foreground);
+    --muted-foreground: var(--ds-muted-foreground);
+    --primary: var(--ds-primary);
+    --primary-hover: var(--ds-primary-hover);
+    --primary-foreground: var(--ds-primary-foreground);
+    --accent: var(--ds-accent);
+    --accent-hover: var(--ds-accent-hover);
+    --accent-foreground: var(--ds-accent-foreground);
+    --border: var(--ds-border);
+    --card-bg: var(--ds-card-bg);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+    font-weight: 700;
+  }
+}
