@@ -49,7 +49,7 @@ A modern, performant, and accessible portfolio website built with the latest web
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/karkigrishmin/portfolio.git
+git clone https://github.com/karkigrishmin/karkigrishmin.github.io.git
 cd grishmin-portfolio-2025
 ```
 
@@ -155,7 +155,7 @@ All components are modular and reusable:
 2. Import project on [Vercel](https://vercel.com)
 3. Deploy with one click
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/karkigrishmin/portfolio)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/karkigrishmin/karkigrishmin.github.io)
 
 ### Other Platforms
 
