@@ -2,6 +2,7 @@
 
 A modern, performant, and accessible portfolio website built with the latest web technologies.
 
+[![Live Site](https://img.shields.io/badge/Live-karkigrishmin.github.io-success?logo=github)](https://karkigrishmin.github.io/)
 ![Portfolio Preview](https://img.shields.io/badge/Next.js-15.5-black?logo=next.js)
 ![React](https://img.shields.io/badge/React-19-blue?logo=react)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)
@@ -12,7 +13,7 @@ A modern, performant, and accessible portfolio website built with the latest web
 - **Latest Tech Stack**: Next.js 15.5, React 19, TypeScript 5, Tailwind CSS 4
 - **Modern Design**: Minimalist, clean interface with smooth animations using Framer Motion
 - **Dark/Light Mode**: Seamless theme switching with persistent preferences
-- **Fully Responsive**: Mobile-first design that looks great on all devices
+- **Fully Responsive**: Optimized for all devices (320px to 1920px+) with mobile-first design
 - **Accessible**: WCAG 2.1 AA compliant with semantic HTML and ARIA labels
 - **Performant**: Optimized for Lighthouse scores 95+
 - **Type-Safe**: Full TypeScript coverage for reliability
@@ -78,10 +79,11 @@ The page will automatically reload when you make changes.
 ## Available Scripts
 
 - `npm run dev` - Start development server with Turbopack
-- `npm run build` - Create production build
-- `npm start` - Start production server
+- `npm run build` - Create production build with static export
 - `npm test` - Run tests with Vitest
 - `npm run test:ui` - Run tests with UI
+
+> **Note**: This project uses Next.js static export for deployment to GitHub Pages.
 
 ## Project Structure
 
@@ -149,22 +151,34 @@ All components are modular and reusable:
 
 ## Deployment
 
-### Vercel (Recommended)
+### GitHub Pages (Current Setup)
 
-1. Push your code to GitHub
-2. Import project on [Vercel](https://vercel.com)
-3. Deploy with one click
+This site is deployed to **GitHub Pages** with automatic deployment via GitHub Actions.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/karkigrishmin/karkigrishmin.github.io)
+**Live Site**: [https://karkigrishmin.github.io/](https://karkigrishmin.github.io/)
 
-### Other Platforms
+**How it works**:
+1. Push changes to the `main` branch
+2. GitHub Actions automatically builds the site
+3. Static files are deployed to GitHub Pages
+4. Site updates within 1-2 minutes
 
-The project can be deployed to any platform that supports Next.js:
-- Netlify
-- Cloudflare Pages
-- AWS Amplify
-- Railway
-- Render
+**To deploy your own**:
+1. Fork this repository
+2. Enable GitHub Pages in repository settings
+3. Set source to "GitHub Actions"
+4. Push to `main` branch to trigger deployment
+
+The deployment workflow is defined in `.github/workflows/deploy.yml`.
+
+### Alternative Platforms
+
+The project can also be deployed to:
+- **Vercel**: Import from GitHub and deploy instantly
+- **Netlify**: Drag and drop the `out/` folder after running `npm run build`
+- **Cloudflare Pages**: Connect repository and configure build settings
+- **AWS Amplify**: Deploy with continuous deployment from GitHub
+- **Railway** / **Render**: Support Next.js static exports
 
 ## Performance
 
