@@ -25,11 +25,11 @@ export function About() {
             {about.title}
           </h2>
 
-          <div className="space-y-6">
+          <div className="space-y-6 px-4">
             {about.description.map((paragraph, index) => (
               <motion.p
                 key={index}
-                className="text-base sm:text-lg text-muted leading-relaxed"
+                className="text-sm sm:text-base md:text-lg text-muted leading-relaxed"
                 initial={{ opacity: 0, x: -20 }}
                 animate={
                   isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }

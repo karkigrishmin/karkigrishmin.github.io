@@ -65,13 +65,13 @@ export function Navigation() {
   }
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 py-2 transition-all duration-500">
+    <nav className="fixed top-0 left-0 right-0 z-50 py-1.5 sm:py-2 transition-all duration-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           className={`flex items-center justify-between transition-all duration-500 ${
             isScrolled
-              ? 'backdrop-blur-2xl border border-border/70 rounded-full px-6 py-2 sm:px-10 sm:py-3 ring-1 ring-offset-0'
-              : 'px-6 py-2 sm:px-10 sm:py-3'
+              ? 'backdrop-blur-2xl border border-border/70 rounded-full px-4 py-1.5 sm:px-6 sm:py-2 md:px-10 md:py-3 ring-1 ring-offset-0'
+              : 'px-4 py-1.5 sm:px-6 sm:py-2 md:px-10 md:py-3'
           }`}
           style={
             isScrolled
@@ -93,7 +93,7 @@ export function Navigation() {
           {/* Logo/Name */}
           <motion.button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="text-xl sm:text-2xl font-bold tracking-tight bg-clip-text text-transparent hover:scale-110 transition-all duration-300"
+            className="text-lg sm:text-xl md:text-2xl font-bold tracking-tight bg-clip-text text-transparent hover:scale-110 transition-all duration-300"
             style={{
               background: 'linear-gradient(135deg, var(--primary), var(--accent))',
               WebkitBackgroundClip: 'text',

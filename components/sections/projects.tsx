@@ -43,13 +43,13 @@ export function Projects() {
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
             Featured Projects
           </h2>
-          <p className="text-lg text-muted max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base md:text-lg text-muted max-w-2xl mx-auto px-4">
             A selection of projects that showcase my skills and passion for development
           </p>
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8"
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
@@ -57,9 +57,9 @@ export function Projects() {
           {projects.map((project) => (
             <motion.div key={project.id} variants={itemVariants}>
               <Card className="h-full flex flex-col group">
-                {/* Project image placeholder with gradient */}
+                {/* Project image placeholder with gradient - responsive height */}
                 <div
-                  className="relative h-48 overflow-hidden"
+                  className="relative h-40 sm:h-48 overflow-hidden"
                   style={{
                     backgroundImage: 'linear-gradient(to bottom right, var(--primary), var(--accent))'
                   }}
@@ -76,7 +76,7 @@ export function Projects() {
 
                 <div className="flex-1 flex flex-col">
                   <CardHeader className="pt-6">
-                    <CardTitle className="group-hover:text-primary transition-colors duration-200">
+                    <CardTitle className="text-base sm:text-lg md:text-xl group-hover:text-primary transition-colors duration-200">
                       {project.title}
                     </CardTitle>
                     <CardDescription>{project.description}</CardDescription>

@@ -28,6 +28,11 @@ export const metadata: Metadata = {
   title: 'Grishmin Karki - Senior Frontend Engineer',
   description:
     'Senior Frontend Engineer with 4+ years of experience specializing in building scalable, user-centric applications. Expert in React, Next.js, TypeScript, and modern frontend technologies.',
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+  },
   keywords: [
     'Grishmin Karki',
     'Frontend Engineer',

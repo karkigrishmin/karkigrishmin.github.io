@@ -42,7 +42,7 @@ export function Experience() {
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
             Experience
           </h2>
-          <p className="text-lg text-muted max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base md:text-lg text-muted max-w-2xl mx-auto px-4">
             Building exceptional digital experiences through innovation and collaboration
           </p>
         </motion.div>
@@ -56,19 +56,19 @@ export function Experience() {
               transition={{ duration: 0.6, delay: 0.2 }}
             >
               <Card className="relative overflow-hidden">
-                {/* Timeline dot */}
+                {/* Timeline indicator - more visible on mobile */}
                 <div
-                  className="absolute left-0 top-0 bottom-0 w-1"
+                  className="absolute left-0 top-0 bottom-0 w-1.5 sm:w-1"
                   style={{
                     backgroundImage: 'linear-gradient(to bottom, var(--primary), var(--accent))'
                   }}
                 />
 
-                <CardHeader className="pl-8">
+                <CardHeader className="pl-6 sm:pl-8">
                   <div className="flex items-start justify-between flex-wrap gap-4">
                     <div>
-                      <CardTitle className="text-2xl mb-2 flex items-center gap-3">
-                        <Briefcase className="w-6 h-6 text-primary" />
+                      <CardTitle className="text-lg sm:text-xl md:text-2xl mb-2 flex items-center gap-2 sm:gap-3">
+                        <Briefcase className="w-5 h-5 sm:w-6 sm:h-6 text-primary flex-shrink-0" />
                         {exp.role}
                       </CardTitle>
                       <Badge variant="accent" className="text-sm">
@@ -78,7 +78,7 @@ export function Experience() {
                   </div>
                 </CardHeader>
 
-                <CardContent className="pl-8">
+                <CardContent className="pl-6 sm:pl-8">
                   <motion.ul
                     className="space-y-4"
                     variants={containerVariants}
@@ -89,9 +89,9 @@ export function Experience() {
                       <motion.li
                         key={idx}
                         variants={itemVariants}
-                        className="flex items-start gap-3 text-muted"
+                        className="flex items-start gap-2 sm:gap-3 text-muted text-sm sm:text-base"
                       >
-                        <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                        <Check className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0 mt-0.5" />
                         <span className="leading-relaxed">{highlight}</span>
                       </motion.li>
                     ))}

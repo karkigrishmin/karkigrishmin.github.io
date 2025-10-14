@@ -41,7 +41,7 @@ export function Skills() {
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
             Skills & Expertise
           </h2>
-          <p className="text-lg text-muted max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base md:text-lg text-muted max-w-2xl mx-auto px-4">
             A comprehensive toolkit built over years of hands-on experience
           </p>
         </motion.div>
@@ -56,7 +56,7 @@ export function Skills() {
             <motion.div key={category} variants={itemVariants}>
               <Card className="h-full group cursor-default">
                 <CardHeader>
-                  <CardTitle className="text-lg group-hover:text-primary transition-colors duration-200">
+                  <CardTitle className="text-base sm:text-lg group-hover:text-primary transition-colors duration-200">
                     {category}
                   </CardTitle>
                 </CardHeader>
@@ -66,7 +66,7 @@ export function Skills() {
                       <Badge
                         key={skill}
                         variant="secondary"
-                        className="hover:!scale-110 hover:!bg-primary hover:!text-primary-foreground hover:!border-transparent transition-all duration-200 cursor-pointer"
+                        className="md:hover:!scale-110 hover:!bg-primary hover:!text-primary-foreground hover:!border-transparent transition-all duration-200 cursor-pointer"
                       >
                         {skill}
                       </Badge>
