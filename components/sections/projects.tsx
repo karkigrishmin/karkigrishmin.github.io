@@ -2,7 +2,7 @@
 
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
-import { ExternalLink, Github } from 'lucide-react'
+import { ExternalLink, Globe } from 'lucide-react'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -49,7 +49,7 @@ export function Projects() {
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
@@ -57,7 +57,7 @@ export function Projects() {
           {projects.map((project) => (
             <motion.div key={project.id} variants={itemVariants}>
               <Card className="h-full flex flex-col group">
-                {/* Project image placeholder with gradient - responsive height */}
+                {/* Project gradient placeholder */}
                 <div
                   className="relative h-40 sm:h-48 overflow-hidden"
                   style={{
@@ -70,7 +70,7 @@ export function Projects() {
                     transition={{ duration: 0.3 }}
                   />
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <Github className="w-16 h-16 text-white/80" />
+                    <Globe className="w-16 h-16 text-white/80" />
                   </div>
                 </div>
 
@@ -122,8 +122,7 @@ export function Projects() {
                         rel="noopener noreferrer"
                         className="flex items-center justify-center gap-2"
                       >
-                        <Github className="w-4 h-4" />
-                        View on GitHub
+                        Visit Live Site
                         <ExternalLink className="w-4 h-4 group-hover/button:translate-x-1 group-hover/button:-translate-y-1 transition-transform duration-200" />
                       </a>
                     </Button>
