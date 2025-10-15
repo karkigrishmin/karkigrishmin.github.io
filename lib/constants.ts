@@ -171,6 +171,59 @@ export const projects = [
   },
 ]
 
+export const testimonials = [
+  {
+    id: '1',
+    name: 'Sep Dehpour',
+    role: 'Founder',
+    company: 'Qluster Data',
+    quote:
+      'I\'ve had the pleasure of working with Grishmin for over a year as our frontend engineer on an early-stage data platform. He\'s a clear communicator, asks thoughtful questions, cares deeply about the product, and has consistently made himself available across time zones—even when that meant late nights to maximize overlap. On the engineering side, he delivered solid React work and stepped in on a few tricky issues. Over time he leaned into newer workflows (AI-assisted development, stronger testing practices, Playwright) and kept improving. He shines when goals are clear and the feedback loop is tight—he moves quickly, keeps you posted, and gets things across the line.',
+    linkedinUrl: 'https://www.linkedin.com/in/sepehr/',
+    image: null,
+  },
+  {
+    id: '2',
+    name: 'Aayush Twayana',
+    role: 'Engineer | Designer | Illustrator',
+    company: 'Iagon',
+    quote:
+      'Had a chance of working together with Grishmin on a project where he worked as a Frontend Engineer. Grishmin is an exceptional developer with a keen eye for design and a deep understanding of user experience. His ability to translate complex designs into high-quality, responsive, and accessible web applications, without sacrificing the quality of the code is truly impressive. Beyond the technical expertise, Grishmin is a great team player and an even good friend, always willing to help others and share the knowledge he has, be it technical or something personal.',
+    linkedinUrl: 'https://www.linkedin.com/in/aayush-twayana-ba811817b/',
+    image: null,
+  },
+  {
+    id: '3',
+    name: 'Ravi Shrestha',
+    role: 'Web3 Engineer',
+    company: 'Iagon',
+    quote:
+      'Highly knowledgeable, deep understanding of what he was doing and a good human being.',
+    linkedinUrl: 'https://www.linkedin.com/in/ravi-shrestha-98064b177/',
+    image: null,
+  },
+  {
+    id: '4',
+    name: 'Anuj Timsina',
+    role: 'Frontend Engineer',
+    company: 'Iagon',
+    quote:
+      'I had the pleasure of working with Grishmin Karki as a frontend developer at NGIT Solutions Pvt. Ltd. He always follows best practices and coding standards, and he\'s very thorough when checking pull requests, making sure everything meets high standards. He\'s genuinely passionate about frontend development and prefers to focus on mastering it rather than moving into other areas. I highly recommend him to any team looking for a dedicated and skilled frontend developer.',
+    linkedinUrl: 'https://www.linkedin.com/in/anuj-timsina/',
+    image: null,
+  },
+  {
+    id: '5',
+    name: 'Aayush Acharya',
+    role: 'PhD CS @ Temple University',
+    company: 'Rara Labs',
+    quote:
+      'I had the pleasure of working alongside Grishmin on a project. His unwavering commitment to excellence and meticulous attention to detail significantly elevated the quality of our work. He is a hardworking and talented frontend developer and I highly recommend him for any web development team.',
+    linkedinUrl: 'https://www.linkedin.com/in/aayush-acharya/',
+    image: null,
+  },
+]
+
 export const contact = {
   title: 'Get In Touch',
   description:
