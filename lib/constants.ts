@@ -3,7 +3,7 @@ export const personalInfo = {
   role: 'Senior Frontend Engineer',
   tagline: 'Crafting pixel-perfect, accessible web experiences with modern technologies',
   location: 'Kathmandu, Nepal',
-  bio: 'Senior Frontend Engineer with 4+ years of experience specializing in building scalable, user-centric applications. Expert in translating complex Figma designs into high-performance, responsive interfaces. Passionate about design systems, testing, and creating seamless user experiences that drive business value. Currently exploring blockchain development on Cardano while maintaining expertise in modern frontend ecosystems.',
+  bio: '4+ years of experience specializing in building scalable, high-performance applications. Expert in translating complex Figma designs into pixel-perfect, responsive interfaces. Proven track record of delivering measurable results—achieved 39.5% performance improvement through state management optimization. Passionate about design systems, comprehensive testing strategies, and creating seamless user experiences that drive business value across Web2 and Web3 ecosystems.',
   email: 'grishminkarki7@gmail.com',
   github: 'https://github.com/karkigrishmin',
   linkedin: 'https://www.linkedin.com/in/grishmin/',
@@ -16,7 +16,7 @@ export const about = {
     'As a Senior Frontend Engineer, I thrive at the intersection of design and code. My expertise lies in transforming Figma designs into pixel-perfect, production-ready applications that users love.',
     'I specialize in building robust component architectures and design systems that scale. My approach combines technical excellence with a deep understanding of user experience, ensuring every interface is not just functional, but delightful.',
     'Beyond frontend development, I\'m passionate about code quality and testing. I\'ve led initiatives to implement comprehensive testing strategies using Vitest and React Testing Library, significantly improving codebase reliability.',
-    'Currently, I\'m expanding my horizons into blockchain development with Cardano, leveraging Elixir to build offchain libraries. This exploration complements my frontend expertise and opens new possibilities for decentralized applications.',
+    'Recently, I achieved a 39.5% performance improvement by migrating state management to React Query and Zustand. My experience spans both Web2 and Web3 ecosystems—from building decentralized cloud storage platforms on Cardano blockchain to optimizing data-heavy enterprise applications. I focus on delivering measurable results through performance optimization, clean architecture, and modern development practices.',
   ],
 }
 
