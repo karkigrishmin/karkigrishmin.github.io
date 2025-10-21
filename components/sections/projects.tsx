@@ -2,7 +2,7 @@
 
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
-import { ExternalLink, Globe } from 'lucide-react'
+import { ExternalLink } from 'lucide-react'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -57,25 +57,7 @@ export function Projects() {
           {projects.map((project) => (
             <motion.div key={project.id} variants={itemVariants}>
               <Card className="h-full flex flex-col group">
-                {/* Project gradient placeholder */}
-                <div
-                  className="relative h-40 sm:h-48 overflow-hidden"
-                  style={{
-                    backgroundImage: 'linear-gradient(to bottom right, var(--primary), var(--accent))'
-                  }}
-                >
-                  <motion.div
-                    className="absolute inset-0 bg-black/20"
-                    whileHover={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <Globe className="w-16 h-16 text-white/80" />
-                  </div>
-                </div>
-
-                <div className="flex-1 flex flex-col">
-                  <CardHeader className="pt-6">
+                <CardHeader>
                     <CardTitle className="text-base sm:text-lg md:text-xl group-hover:text-primary transition-colors duration-200">
                       {project.title}
                     </CardTitle>
@@ -110,24 +92,23 @@ export function Projects() {
                     </div>
                   </CardContent>
 
-                  <CardFooter>
-                    <Button
-                      variant="outline"
-                      className="w-full group/button"
-                      asChild
+                <CardFooter>
+                  <Button
+                    variant="outline"
+                    className="w-full group/button"
+                    asChild
+                  >
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2"
                     >
-                      <a
-                        href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2"
-                      >
-                        Visit Live Site
-                        <ExternalLink className="w-4 h-4 group-hover/button:translate-x-1 group-hover/button:-translate-y-1 transition-transform duration-200" />
-                      </a>
-                    </Button>
-                  </CardFooter>
-                </div>
+                      Visit Live Site
+                      <ExternalLink className="w-4 h-4 group-hover/button:translate-x-1 group-hover/button:-translate-y-1 transition-transform duration-200" />
+                    </a>
+                  </Button>
+                </CardFooter>
               </Card>
             </motion.div>
           ))}
