@@ -32,6 +32,7 @@ export const skills = {
     'Tailwind CSS',
     'CSS-in-JS',
     'Radix UI',
+    'shadcn/ui',
     'CVA',
     'Responsive Design',
     'Figma to Code',
@@ -39,14 +40,16 @@ export const skills = {
   'State & Data': [
     'Redux Toolkit',
     'React Query / TanStack Query',
+    'Zustand',
     'Svelte Store',
     'REST APIs',
     'GraphQL',
-    'Axios / Orval',
+    'Axios',
   ],
   'Testing & Quality': [
     'Vitest',
     'Jest',
+    'Playwright',
     'React Testing Library',
     'Svelte Testing Library',
     'Unit Testing',
@@ -54,16 +57,17 @@ export const skills = {
   ],
   'Tools & Practices': [
     'Git / GitHub',
+    'Storybook',
+    'Chrome Extensions',
     'Performance Optimization',
     'Web Accessibility (a11y)',
     'Design Systems',
     'Component Libraries',
     'Code Reviews',
   ],
-  'Exploring': [
-    'Elixir',
-    'Rust',
-    'Cardano Blockchain',
+  'Web3 & Blockchain': [
+    'Cardano',
+    'lucid-cardano',
     'Web3 Development',
   ],
 }
