@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Quote, Linkedin, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { testimonials } from '@/lib/constants'
@@ -26,6 +26,7 @@ export function Testimonials() {
 
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([])
+  const [expandedCards, setExpandedCards] = useState<{ [key: string]: boolean }>({})
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev()
@@ -41,6 +42,13 @@ export function Testimonials() {
     },
     [emblaApi]
   )
+
+  const toggleExpand = (id: string) => {
+    setExpandedCards((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }))
+  }
 
   const onInit = useCallback(() => {
     if (emblaApi) {
@@ -71,7 +79,7 @@ export function Testimonials() {
   }, [emblaApi, onInit, onSelect])
 
   return (
-    <section id="testimonials" className="py-20 sm:py-32 px-4 sm:px-6 lg:px-8">
+    <section id="testimonials" className="py-20 sm:py-32 px-4 sm:px-6 lg:px-8 bg-secondary/50">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
@@ -92,66 +100,94 @@ export function Testimonials() {
         {/* Carousel */}
         <div className="relative">
           <div className="overflow-hidden" ref={emblaRef}>
-            <div className="flex gap-6">
-              {testimonials.map((testimonial) => (
-                <div
-                  key={testimonial.id}
-                  className="flex-[0_0_100%] min-w-0 sm:flex-[0_0_calc(50%-12px)] lg:flex-[0_0_calc(33.333%-16px)]"
-                >
-                  <Card className="h-full flex flex-col border-border/40 hover:border-border hover:shadow-lg transition-all duration-300">
-                    <CardContent className="pt-6 flex flex-col h-full">
-                      {/* Quote Icon */}
-                      <div className="mb-4">
-                        <Quote className="w-8 h-8 text-primary/50" />
-                      </div>
+            <div className="flex">
+              {testimonials.map((testimonial) => {
+                const isExpanded = expandedCards[testimonial.id]
+                const shouldTruncate = testimonial.quote.length > 200
 
-                      {/* Testimonial Text */}
-                      <p className="text-sm sm:text-base text-muted-foreground mb-6 flex-1 leading-relaxed line-clamp-6">
-                        "{testimonial.quote}"
-                      </p>
+                return (
+                  <div
+                    key={testimonial.id}
+                    className="flex-[0_0_100%] min-w-0 sm:flex-[0_0_50%] lg:flex-[0_0_33.333%] pr-6"
+                  >
+                    <Card className="h-full flex flex-col border-border/40 hover:border-border hover:shadow-lg transition-all duration-300">
+                      <CardContent className="pt-6 flex flex-col h-full">
+                        {/* Quote Icon */}
+                        <div className="mb-4">
+                          <Quote className="w-8 h-8 text-primary/50" />
+                        </div>
 
-                      {/* Author Info */}
-                      <div className="flex items-center gap-4 pt-4 border-t border-border/40">
-                        {/* Avatar or Initials */}
-                        <div className="flex-shrink-0">
-                          {testimonial.image ? (
-                            <img
-                              src={testimonial.image}
-                              alt={testimonial.name}
-                              className="w-12 h-12 rounded-full object-cover"
-                            />
-                          ) : (
-                            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-semibold text-sm">
-                              {getInitials(testimonial.name)}
-                            </div>
+                        {/* Testimonial Text */}
+                        <div className="mb-6 flex-1">
+                          <AnimatePresence mode="wait">
+                            <motion.p
+                              key={isExpanded ? 'expanded' : 'collapsed'}
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              exit={{ opacity: 0 }}
+                              transition={{ duration: 0.2 }}
+                              className={`text-sm sm:text-base text-muted-foreground leading-relaxed ${
+                                !isExpanded && shouldTruncate ? 'line-clamp-4' : ''
+                              }`}
+                            >
+                              "{testimonial.quote}"
+                            </motion.p>
+                          </AnimatePresence>
+
+                          {/* Read More/Less Button */}
+                          {shouldTruncate && (
+                            <button
+                              onClick={() => toggleExpand(testimonial.id)}
+                              className="mt-2 text-sm text-primary hover:text-primary/80 transition-colors duration-200 font-medium"
+                            >
+                              {isExpanded ? 'Read less' : 'Read more'}
+                            </button>
                           )}
                         </div>
 
-                        {/* Name and Role */}
-                        <div className="flex-1 min-w-0">
-                          <h4 className="font-semibold text-sm sm:text-base truncate">
-                            {testimonial.name}
-                          </h4>
-                          <p className="text-xs sm:text-sm text-muted-foreground truncate">
-                            {testimonial.role} at {testimonial.company}
-                          </p>
-                        </div>
+                        {/* Author Info */}
+                        <div className="flex items-center gap-4 pt-4 border-t border-border/40">
+                          {/* Avatar or Initials */}
+                          <div className="flex-shrink-0">
+                            {testimonial.image ? (
+                              <img
+                                src={testimonial.image}
+                                alt={testimonial.name}
+                                className="w-12 h-12 rounded-full object-cover"
+                              />
+                            ) : (
+                              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-semibold text-sm">
+                                {getInitials(testimonial.name)}
+                              </div>
+                            )}
+                          </div>
 
-                        {/* LinkedIn Link */}
-                        <a
-                          href={testimonial.linkedinUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-shrink-0 text-muted-foreground hover:text-primary transition-colors duration-200"
-                          aria-label={`View ${testimonial.name}'s LinkedIn profile`}
-                        >
-                          <Linkedin className="w-5 h-5" />
-                        </a>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-              ))}
+                          {/* Name and Role */}
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-semibold text-sm sm:text-base truncate">
+                              {testimonial.name}
+                            </h4>
+                            <p className="text-xs sm:text-sm text-muted-foreground truncate">
+                              {testimonial.role} at {testimonial.company}
+                            </p>
+                          </div>
+
+                          {/* LinkedIn Link */}
+                          <a
+                            href={testimonial.linkedinUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex-shrink-0 text-muted-foreground hover:text-primary transition-colors duration-200"
+                            aria-label={`View ${testimonial.name}'s LinkedIn profile`}
+                          >
+                            <Linkedin className="w-5 h-5" />
+                          </a>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                )
+              })}
             </div>
           </div>
 
