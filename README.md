@@ -13,6 +13,8 @@ A modern, performant, and accessible portfolio website built with the latest web
 - **Latest Tech Stack**: Next.js 15.5, React 19, TypeScript 5, Tailwind CSS 4
 - **Modern Design**: Minimalist, clean interface with smooth animations using Framer Motion
 - **Dark/Light Mode**: Seamless theme switching with persistent preferences
+- **Auto-Rotating Testimonials**: Interactive carousel with Embla Carousel, read more/less functionality
+- **Timeline Experience**: Beautiful timeline layout showcasing 6 professional positions
 - **Fully Responsive**: Optimized for all devices (320px to 1920px+) with mobile-first design
 - **Accessible**: WCAG 2.1 AA compliant with semantic HTML and ARIA labels
 - **Performant**: Optimized for Lighthouse scores 95+
@@ -30,6 +32,7 @@ A modern, performant, and accessible portfolio website built with the latest web
 ### Styling
 - **CSS Framework**: [Tailwind CSS 4](https://tailwindcss.com/)
 - **Animations**: [Framer Motion 12](https://www.framer.com/motion/)
+- **Carousel**: [Embla Carousel](https://www.embla-carousel.com/) with autoplay plugin
 - **Theme**: [next-themes](https://github.com/pacocoursey/next-themes)
 - **Icons**: [Lucide React](https://lucide.dev/)
 - **Utilities**: [CVA](https://cva.style/), clsx, tailwind-merge
@@ -103,8 +106,9 @@ grishmin-portfolio-2025/
 │   │   ├── hero.tsx
 │   │   ├── about.tsx
 │   │   ├── skills.tsx
-│   │   ├── experience.tsx
-│   │   ├── projects.tsx
+│   │   ├── experience.tsx  # Timeline with 6 jobs
+│   │   ├── projects.tsx    # 6 professional projects
+│   │   ├── testimonials.tsx # Carousel with 5 LinkedIn recommendations
 │   │   └── contact.tsx
 │   ├── navigation.tsx      # Navigation bar
 │   ├── theme-provider.tsx  # Theme context
@@ -128,9 +132,10 @@ grishmin-portfolio-2025/
 
 All content is centralized in `lib/constants.ts`. Update this file to change:
 - Personal information
-- Skills
-- Experience
-- Projects
+- Skills (6 categories with technologies)
+- Experience (6 professional positions with timeline data)
+- Projects (6 client projects with live links)
+- Testimonials (5 LinkedIn recommendations)
 - Social links
 
 ### Design
