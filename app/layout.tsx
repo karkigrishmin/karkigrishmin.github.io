@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter, Space_Grotesk, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
@@ -24,15 +24,16 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ['400', '500'],
 })
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+}
+
 export const metadata: Metadata = {
   title: 'Grishmin Karki - Senior Frontend Engineer',
   description:
     'Senior Frontend Engineer with 4+ years of experience specializing in building scalable, user-centric applications. Expert in React, Next.js, TypeScript, and modern frontend technologies.',
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 5,
-  },
   keywords: [
     'Grishmin Karki',
     'Frontend Engineer',
@@ -46,14 +47,23 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'Grishmin Karki', url: 'https://github.com/karkigrishmin' }],
   creator: 'Grishmin Karki',
+  metadataBase: new URL('https://karkigrishmin.github.io'),
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://grishmin.dev',
+    url: 'https://karkigrishmin.github.io/',
     title: 'Grishmin Karki - Senior Frontend Engineer',
     description:
       'Senior Frontend Engineer specializing in React, Next.js, and modern web technologies.',
     siteName: 'Grishmin Karki Portfolio',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Grishmin Karki - Senior Frontend Engineer Portfolio',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
@@ -61,6 +71,7 @@ export const metadata: Metadata = {
     description:
       'Senior Frontend Engineer specializing in React, Next.js, and modern web technologies.',
     creator: '@karkigrishmin',
+    images: ['/og-image.png'],
   },
   robots: {
     index: true,

@@ -19,10 +19,9 @@ const getInitials = (name: string) => {
 }
 
 export function Testimonials() {
-  const [emblaRef, emblaApi] = useEmblaCarousel(
-    { loop: true, align: 'start' },
-    [Autoplay({ delay: 5000, stopOnInteraction: false, stopOnMouseEnter: true })]
-  )
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'start' }, [
+    Autoplay({ delay: 5000, stopOnInteraction: false, stopOnMouseEnter: true }),
+  ])
 
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([])
@@ -79,20 +78,18 @@ export function Testimonials() {
   }, [emblaApi, onInit, onSelect])
 
   return (
-    <section id="testimonials" className="py-20 sm:py-32 px-4 sm:px-6 lg:px-8 bg-secondary/50">
-      <div className="max-w-7xl mx-auto">
+    <section id="testimonials" className="bg-secondary/50 px-4 py-20 sm:px-6 sm:py-32 lg:px-8">
+      <div className="mx-auto max-w-7xl">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="mb-16 text-center"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-            What People Say
-          </h2>
-          <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
+          <h2 className="mb-4 text-3xl font-bold sm:text-4xl lg:text-5xl">What People Say</h2>
+          <p className="text-muted-foreground mx-auto max-w-2xl text-sm sm:text-base md:text-lg">
             Recommendations from colleagues, managers, and clients
           </p>
         </motion.div>
@@ -108,13 +105,13 @@ export function Testimonials() {
                 return (
                   <div
                     key={testimonial.id}
-                    className="flex-[0_0_100%] min-w-0 sm:flex-[0_0_50%] lg:flex-[0_0_33.333%] pr-6"
+                    className="min-w-0 flex-[0_0_100%] pr-6 sm:flex-[0_0_50%] lg:flex-[0_0_33.333%]"
                   >
-                    <Card className="h-full flex flex-col border-border/40 hover:border-border hover:shadow-lg transition-all duration-300">
-                      <CardContent className="pt-6 flex flex-col h-full">
+                    <Card className="border-border/40 hover:border-border flex h-full flex-col transition-all duration-300 hover:shadow-lg">
+                      <CardContent className="flex h-full flex-col pt-6">
                         {/* Quote Icon */}
                         <div className="mb-4">
-                          <Quote className="w-8 h-8 text-primary/50" />
+                          <Quote className="text-primary/50 h-8 w-8" />
                         </div>
 
                         {/* Testimonial Text */}
@@ -126,11 +123,11 @@ export function Testimonials() {
                               animate={{ opacity: 1 }}
                               exit={{ opacity: 0 }}
                               transition={{ duration: 0.2 }}
-                              className={`text-sm sm:text-base text-muted-foreground leading-relaxed ${
+                              className={`text-muted-foreground text-sm leading-relaxed sm:text-base ${
                                 !isExpanded && shouldTruncate ? 'line-clamp-4' : ''
                               }`}
                             >
-                              "{testimonial.quote}"
+                              &quot;{testimonial.quote}&quot;
                             </motion.p>
                           </AnimatePresence>
 
@@ -138,7 +135,7 @@ export function Testimonials() {
                           {shouldTruncate && (
                             <button
                               onClick={() => toggleExpand(testimonial.id)}
-                              className="mt-2 text-sm text-primary hover:text-primary/80 transition-colors duration-200 font-medium"
+                              className="text-primary hover:text-primary/80 mt-2 text-sm font-medium transition-colors duration-200"
                             >
                               {isExpanded ? 'Read less' : 'Read more'}
                             </button>
@@ -146,28 +143,28 @@ export function Testimonials() {
                         </div>
 
                         {/* Author Info */}
-                        <div className="flex items-center gap-4 pt-4 border-t border-border/40">
+                        <div className="border-border/40 flex items-center gap-4 border-t pt-4">
                           {/* Avatar or Initials */}
                           <div className="flex-shrink-0">
                             {testimonial.image ? (
                               <img
                                 src={testimonial.image}
                                 alt={testimonial.name}
-                                className="w-12 h-12 rounded-full object-cover"
+                                className="h-12 w-12 rounded-full object-cover"
                               />
                             ) : (
-                              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-semibold text-sm">
+                              <div className="from-primary to-accent flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br text-sm font-semibold text-white">
                                 {getInitials(testimonial.name)}
                               </div>
                             )}
                           </div>
 
                           {/* Name and Role */}
-                          <div className="flex-1 min-w-0">
-                            <h4 className="font-semibold text-sm sm:text-base truncate">
+                          <div className="min-w-0 flex-1">
+                            <h4 className="truncate text-sm font-semibold sm:text-base">
                               {testimonial.name}
                             </h4>
-                            <p className="text-xs sm:text-sm text-muted-foreground truncate">
+                            <p className="text-muted-foreground truncate text-xs sm:text-sm">
                               {testimonial.role} at {testimonial.company}
                             </p>
                           </div>
@@ -177,10 +174,10 @@ export function Testimonials() {
                             href={testimonial.linkedinUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex-shrink-0 text-muted-foreground hover:text-primary transition-colors duration-200"
+                            className="text-muted-foreground hover:text-primary flex-shrink-0 transition-colors duration-200"
                             aria-label={`View ${testimonial.name}'s LinkedIn profile`}
                           >
-                            <Linkedin className="w-5 h-5" />
+                            <Linkedin className="h-5 w-5" />
                           </a>
                         </div>
                       </CardContent>
@@ -194,28 +191,28 @@ export function Testimonials() {
           {/* Navigation Arrows */}
           <button
             onClick={scrollPrev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 sm:-translate-x-12 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-background/80 backdrop-blur-sm border border-border hover:bg-accent hover:text-accent-foreground transition-all duration-200 flex items-center justify-center shadow-lg z-10"
+            className="bg-background/80 border-border hover:bg-accent hover:text-accent-foreground absolute top-1/2 left-0 z-10 flex h-10 w-10 -translate-x-4 -translate-y-1/2 items-center justify-center rounded-full border shadow-lg backdrop-blur-sm transition-all duration-200 sm:h-12 sm:w-12 sm:-translate-x-12"
             aria-label="Previous testimonial"
           >
-            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+            <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
           </button>
           <button
             onClick={scrollNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 sm:translate-x-12 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-background/80 backdrop-blur-sm border border-border hover:bg-accent hover:text-accent-foreground transition-all duration-200 flex items-center justify-center shadow-lg z-10"
+            className="bg-background/80 border-border hover:bg-accent hover:text-accent-foreground absolute top-1/2 right-0 z-10 flex h-10 w-10 translate-x-4 -translate-y-1/2 items-center justify-center rounded-full border shadow-lg backdrop-blur-sm transition-all duration-200 sm:h-12 sm:w-12 sm:translate-x-12"
             aria-label="Next testimonial"
           >
-            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+            <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
           </button>
 
           {/* Dots Navigation */}
-          <div className="flex justify-center gap-2 mt-8">
+          <div className="mt-8 flex justify-center gap-2">
             {scrollSnaps.map((_, index) => (
               <button
                 key={index}
                 onClick={() => scrollTo(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                className={`h-2 w-2 rounded-full transition-all duration-300 ${
                   index === selectedIndex
-                    ? 'w-8 bg-primary'
+                    ? 'bg-primary w-8'
                     : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
                 }`}
                 aria-label={`Go to testimonial ${index + 1}`}
