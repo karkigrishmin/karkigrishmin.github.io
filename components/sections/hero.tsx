@@ -14,27 +14,34 @@ const fadeIn = {
 export function Hero() {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id)
-    element?.scrollIntoView({ behavior: 'smooth' })
+
+    // Respect user's motion preferences for accessibility
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    element?.scrollIntoView({
+      behavior: prefersReducedMotion ? 'auto' : 'smooth',
+    })
   }
 
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 overflow-hidden"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 pt-20 sm:px-6 sm:pt-24 lg:px-8"
     >
       {/* Background gradient */}
       <div
         className="absolute inset-0 -z-10"
         style={{
-          backgroundImage: 'linear-gradient(to bottom right, color-mix(in srgb, var(--primary) 5%, transparent), transparent, color-mix(in srgb, var(--accent) 5%, transparent))'
+          backgroundImage:
+            'linear-gradient(to bottom right, color-mix(in srgb, var(--primary) 5%, transparent), transparent, color-mix(in srgb, var(--accent) 5%, transparent))',
         }}
       />
 
       {/* Floating shapes for visual interest - hidden on mobile to prevent overflow */}
       <motion.div
-        className="absolute top-20 left-10 w-40 h-40 sm:w-56 sm:h-56 md:w-72 md:h-72 rounded-full blur-3xl -z-10 hidden sm:block"
+        className="absolute top-20 left-10 -z-10 hidden h-40 w-40 rounded-full blur-3xl sm:block sm:h-56 sm:w-56 md:h-72 md:w-72"
         style={{
-          backgroundColor: 'color-mix(in srgb, var(--primary) 10%, transparent)'
+          backgroundColor: 'color-mix(in srgb, var(--primary) 10%, transparent)',
         }}
         animate={{
           y: [0, -20, 0],
@@ -47,9 +54,9 @@ export function Hero() {
         }}
       />
       <motion.div
-        className="absolute bottom-20 right-10 w-56 h-56 sm:w-72 sm:h-72 md:w-96 md:h-96 rounded-full blur-3xl -z-10 hidden sm:block"
+        className="absolute right-10 bottom-20 -z-10 hidden h-56 w-56 rounded-full blur-3xl sm:block sm:h-72 sm:w-72 md:h-96 md:w-96"
         style={{
-          backgroundColor: 'color-mix(in srgb, var(--accent) 10%, transparent)'
+          backgroundColor: 'color-mix(in srgb, var(--accent) 10%, transparent)',
         }}
         animate={{
           y: [0, 20, 0],
@@ -62,21 +69,21 @@ export function Hero() {
         }}
       />
 
-      <div className="max-w-5xl mx-auto text-center px-2 sm:px-4">
+      <div className="mx-auto max-w-5xl px-2 text-center sm:px-4">
         <motion.div
           initial="hidden"
           animate="visible"
           variants={fadeIn}
           transition={{ duration: 0.6 }}
         >
-          <Badge variant="outline" className="mb-6 text-sm px-3 py-1.5">
-            <MapPin className="w-3 h-3 mr-1 text-primary" />
+          <Badge variant="outline" className="mb-6 px-3 py-1.5 text-sm">
+            <MapPin className="text-primary mr-1 h-3 w-3" />
             {personalInfo.location}
           </Badge>
         </motion.div>
 
         <motion.h1
-          className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-foreground px-2"
+          className="text-foreground mb-6 px-2 text-3xl font-bold sm:text-5xl md:text-6xl lg:text-7xl"
           initial="hidden"
           animate="visible"
           variants={fadeIn}
@@ -86,7 +93,7 @@ export function Hero() {
         </motion.h1>
 
         <motion.h2
-          className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold mb-4 text-primary px-2"
+          className="text-primary mb-4 px-2 text-xl font-semibold sm:text-2xl md:text-3xl lg:text-4xl"
           initial="hidden"
           animate="visible"
           variants={fadeIn}
@@ -96,7 +103,7 @@ export function Hero() {
         </motion.h2>
 
         <motion.p
-          className="text-base sm:text-lg md:text-xl text-muted mb-6 max-w-2xl mx-auto px-4"
+          className="text-muted mx-auto mb-6 max-w-2xl px-4 text-base sm:text-lg md:text-xl"
           initial="hidden"
           animate="visible"
           variants={fadeIn}
@@ -106,7 +113,7 @@ export function Hero() {
         </motion.p>
 
         <motion.p
-          className="text-sm sm:text-base md:text-lg text-muted mb-8 max-w-3xl mx-auto leading-relaxed px-4"
+          className="text-muted mx-auto mb-8 max-w-3xl px-4 text-sm leading-relaxed sm:text-base md:text-lg"
           initial="hidden"
           animate="visible"
           variants={fadeIn}
@@ -116,7 +123,7 @@ export function Hero() {
         </motion.p>
 
         <motion.div
-          className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4 mb-16 sm:mb-20"
+          className="mb-16 flex flex-col items-center justify-center gap-3 px-4 sm:mb-20 sm:flex-row sm:gap-4"
           initial="hidden"
           animate="visible"
           variants={fadeIn}
@@ -125,7 +132,7 @@ export function Hero() {
           <Button
             size="lg"
             onClick={() => scrollToSection('projects')}
-            className="min-w-[160px] w-full sm:w-auto"
+            className="w-full min-w-[160px] sm:w-auto"
           >
             View My Work
           </Button>
@@ -133,7 +140,7 @@ export function Hero() {
             size="lg"
             variant="outline"
             onClick={() => scrollToSection('contact')}
-            className="min-w-[160px] w-full sm:w-auto"
+            className="w-full min-w-[160px] sm:w-auto"
           >
             Get In Touch
           </Button>
@@ -141,7 +148,7 @@ export function Hero() {
 
         {/* Scroll indicator - hidden on short screens */}
         <motion.div
-          className="absolute bottom-10 left-1/2 transform -translate-x-1/2 hidden min-[600px]:block"
+          className="absolute bottom-10 left-1/2 hidden -translate-x-1/2 transform min-[600px]:block"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 0.6 }}
@@ -149,11 +156,11 @@ export function Hero() {
           <motion.div
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            className="flex flex-col items-center gap-2 text-muted cursor-pointer"
+            className="text-muted flex cursor-pointer flex-col items-center gap-2"
             onClick={() => scrollToSection('about')}
           >
             <span className="text-sm font-medium">Scroll to explore</span>
-            <ArrowDown className="w-5 h-5" />
+            <ArrowDown className="h-5 w-5" />
           </motion.div>
         </motion.div>
       </div>

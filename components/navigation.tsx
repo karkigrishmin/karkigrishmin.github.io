@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { ThemeToggle } from './theme-toggle'
@@ -19,18 +19,27 @@ export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('')
+  const isScrolledRef = useRef(false)
+
+  // Optimized scroll handler - only updates state when value actually changes
+  const handleScroll = useCallback(() => {
+    const scrolled = window.scrollY > 50
+
+    // Only trigger re-render if the value changed (reduces 60+ renders/sec to 2 total)
+    if (scrolled !== isScrolledRef.current) {
+      isScrolledRef.current = scrolled
+      setIsScrolled(scrolled)
+    }
+  }, [])
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
-
     // Check scroll position on mount
     handleScroll()
 
-    window.addEventListener('scroll', handleScroll)
+    // Add passive listener for better scroll performance
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [handleScroll])
 
   // Track active section with IntersectionObserver
   useEffect(() => {
@@ -61,27 +70,36 @@ export function Navigation() {
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href)
-    element?.scrollIntoView({ behavior: 'smooth' })
+
+    // Respect user's motion preferences for accessibility
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    element?.scrollIntoView({
+      behavior: prefersReducedMotion ? 'auto' : 'smooth',
+    })
+
     setIsMobileMenuOpen(false) // Close mobile menu after navigation
   }
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 py-1.5 sm:py-2 transition-all duration-500">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="fixed top-0 right-0 left-0 z-50 py-1.5 transition-all duration-500 sm:py-2">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           className={`flex items-center justify-between transition-all duration-500 ${
             isScrolled
-              ? 'backdrop-blur-2xl border border-border/70 rounded-full px-4 py-1.5 sm:px-6 sm:py-2 md:px-10 md:py-3 ring-1 ring-offset-0'
+              ? 'border-border/70 rounded-full border px-4 py-1.5 ring-1 ring-offset-0 backdrop-blur-2xl sm:px-6 sm:py-2 md:px-10 md:py-3'
               : 'px-4 py-1.5 sm:px-6 sm:py-2 md:px-10 md:py-3'
           }`}
           style={
             isScrolled
-              ? {
+              ? ({
                   backgroundColor: 'color-mix(in srgb, var(--card-bg) 80%, transparent)',
-                  backgroundImage: 'linear-gradient(to right, color-mix(in srgb, var(--primary) 8%, transparent), color-mix(in srgb, var(--accent) 8%, transparent))',
+                  backgroundImage:
+                    'linear-gradient(to right, color-mix(in srgb, var(--primary) 8%, transparent), color-mix(in srgb, var(--accent) 8%, transparent))',
                   '--tw-ring-color': 'color-mix(in srgb, var(--primary) 20%, transparent)',
-                  boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.35), 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 0 0 1px color-mix(in srgb, var(--primary) 8%, transparent)',
-                } as React.CSSProperties
+                  boxShadow:
+                    '0 25px 50px -12px rgba(0, 0, 0, 0.35), 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 0 0 1px color-mix(in srgb, var(--primary) 8%, transparent)',
+                } as React.CSSProperties)
               : undefined
           }
           initial={false}
@@ -93,8 +111,13 @@ export function Navigation() {
         >
           {/* Logo/Name */}
           <motion.button
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="text-lg sm:text-xl md:text-2xl font-bold tracking-tight bg-clip-text text-transparent hover:scale-110 transition-all duration-300"
+            onClick={() => {
+              const prefersReducedMotion = window.matchMedia(
+                '(prefers-reduced-motion: reduce)'
+              ).matches
+              window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' })
+            }}
+            className="bg-clip-text text-lg font-bold tracking-tight text-transparent transition-all duration-300 hover:scale-110 sm:text-xl md:text-2xl"
             style={{
               background: 'linear-gradient(135deg, var(--primary), var(--accent))',
               WebkitBackgroundClip: 'text',
@@ -108,7 +131,7 @@ export function Navigation() {
           </motion.button>
 
           {/* Navigation Links - Hidden on mobile */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden items-center gap-1 md:flex">
             {navItems.map((item) => {
               const isActive = activeSection === item.href
               return (
@@ -116,7 +139,7 @@ export function Navigation() {
                   <Button
                     variant="ghost"
                     onClick={() => scrollToSection(item.href)}
-                    className={`text-sm font-medium rounded-md px-4 py-2 transition-all duration-300 ${
+                    className={`rounded-md px-4 py-2 text-sm font-medium transition-all duration-300 ${
                       isActive
                         ? 'text-primary bg-primary/15'
                         : 'hover:text-primary hover:bg-primary/10'
@@ -126,7 +149,7 @@ export function Navigation() {
                   </Button>
                   {isActive && (
                     <motion.div
-                      className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-0.5 rounded-full"
+                      className="absolute bottom-0 left-1/2 h-0.5 w-1/2 -translate-x-1/2 rounded-full"
                       style={{
                         background: 'linear-gradient(to right, var(--primary), var(--accent))',
                       }}
@@ -147,15 +170,11 @@ export function Navigation() {
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden hover:scale-110 hover:bg-primary/10 transition-all duration-200"
+              className="hover:bg-primary/10 transition-all duration-200 hover:scale-110 md:hidden"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle mobile menu"
             >
-              {isMobileMenuOpen ? (
-                <X className="h-5 w-5" />
-              ) : (
-                <Menu className="h-5 w-5" />
-              )}
+              {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
           </div>
         </motion.div>
@@ -168,15 +187,19 @@ export function Navigation() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.95 }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="md:hidden overflow-hidden backdrop-blur-2xl border border-border/70 mt-3 rounded-2xl ring-1"
-              style={{
-                backgroundColor: 'color-mix(in srgb, var(--card-bg) 80%, transparent)',
-                backgroundImage: 'linear-gradient(to bottom, color-mix(in srgb, var(--primary) 8%, transparent), color-mix(in srgb, var(--accent) 8%, transparent))',
-                '--tw-ring-color': 'color-mix(in srgb, var(--primary) 20%, transparent)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.35), 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 0 0 1px color-mix(in srgb, var(--primary) 8%, transparent)',
-              } as React.CSSProperties}
+              className="border-border/70 mt-3 overflow-hidden rounded-2xl border ring-1 backdrop-blur-2xl md:hidden"
+              style={
+                {
+                  backgroundColor: 'color-mix(in srgb, var(--card-bg) 80%, transparent)',
+                  backgroundImage:
+                    'linear-gradient(to bottom, color-mix(in srgb, var(--primary) 8%, transparent), color-mix(in srgb, var(--accent) 8%, transparent))',
+                  '--tw-ring-color': 'color-mix(in srgb, var(--primary) 20%, transparent)',
+                  boxShadow:
+                    '0 25px 50px -12px rgba(0, 0, 0, 0.35), 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 0 0 1px color-mix(in srgb, var(--primary) 8%, transparent)',
+                } as React.CSSProperties
+              }
             >
-              <div className="flex flex-col p-4 space-y-1">
+              <div className="flex flex-col space-y-1 p-4">
                 {navItems.map((item, index) => {
                   const isActive = activeSection === item.href
                   return (
@@ -189,7 +212,7 @@ export function Navigation() {
                       <Button
                         variant="ghost"
                         onClick={() => scrollToSection(item.href)}
-                        className={`w-full justify-start text-left rounded-xl px-4 py-3 transition-all duration-300 ${
+                        className={`w-full justify-start rounded-xl px-4 py-3 text-left transition-all duration-300 ${
                           isActive
                             ? 'text-primary bg-primary/15 font-semibold'
                             : 'hover:text-primary hover:bg-primary/10'
@@ -198,8 +221,11 @@ export function Navigation() {
                         <span className="flex items-center gap-3">
                           {isActive && (
                             <motion.span
-                              className="w-1.5 h-1.5 rounded-full"
-                              style={{ background: 'linear-gradient(to right, var(--primary), var(--accent))' }}
+                              className="h-1.5 w-1.5 rounded-full"
+                              style={{
+                                background:
+                                  'linear-gradient(to right, var(--primary), var(--accent))',
+                              }}
                               layoutId="mobileActiveIndicator"
                             />
                           )}
@@ -208,8 +234,10 @@ export function Navigation() {
                       </Button>
                       {index < navItems.length - 1 && (
                         <div
-                          className="h-px mx-4 my-1"
-                          style={{ background: 'color-mix(in srgb, var(--border) 30%, transparent)' }}
+                          className="mx-4 my-1 h-px"
+                          style={{
+                            background: 'color-mix(in srgb, var(--border) 30%, transparent)',
+                          }}
                         />
                       )}
                     </motion.div>
