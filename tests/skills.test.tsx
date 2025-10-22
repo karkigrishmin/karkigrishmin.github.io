@@ -1,17 +1,17 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { Skills } from '@/components/sections/skills'
 
 // Mock IntersectionObserver
-global.IntersectionObserver = class IntersectionObserver {
-  constructor() {}
-  disconnect() {}
-  observe() {}
-  takeRecords() {
-    return []
-  }
-  unobserve() {}
-} as any
+global.IntersectionObserver = vi.fn(() => ({
+  disconnect: vi.fn(),
+  observe: vi.fn(),
+  takeRecords: () => [],
+  unobserve: vi.fn(),
+  root: null,
+  rootMargin: '',
+  thresholds: [],
+})) as unknown as typeof IntersectionObserver
 
 describe('Skills Section', () => {
   it('renders section heading', () => {

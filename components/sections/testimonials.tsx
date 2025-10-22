@@ -9,7 +9,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { testimonials } from '@/lib/constants'
 
 // Helper function to get initials from name
-const getInitials = (name: string) => {
+const getInitials = (name: string): string => {
   return name
     .split(' ')
     .map((n) => n[0])

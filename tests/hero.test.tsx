@@ -3,9 +3,12 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import { Hero } from '@/components/sections/hero'
 
 // Mock getElementById for scroll behavior
-global.document.getElementById = vi.fn((id: string) => ({
-  scrollIntoView: vi.fn(),
-})) as any
+global.document.getElementById = vi.fn(
+  (_id: string) =>
+    ({
+      scrollIntoView: vi.fn(),
+    }) as unknown as HTMLElement
+)
 
 describe('Hero Section', () => {
   it('renders personal information', () => {

@@ -3,15 +3,15 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import { Navigation } from '@/components/navigation'
 
 // Mock IntersectionObserver
-global.IntersectionObserver = class IntersectionObserver {
-  constructor() {}
-  disconnect() {}
-  observe() {}
-  takeRecords() {
-    return []
-  }
-  unobserve() {}
-} as any
+global.IntersectionObserver = vi.fn(() => ({
+  disconnect: vi.fn(),
+  observe: vi.fn(),
+  takeRecords: () => [],
+  unobserve: vi.fn(),
+  root: null,
+  rootMargin: '',
+  thresholds: [],
+})) as unknown as typeof IntersectionObserver
 
 // Mock scroll behaviors
 global.scrollTo = vi.fn()

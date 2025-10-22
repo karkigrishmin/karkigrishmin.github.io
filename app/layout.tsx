@@ -48,13 +48,16 @@ export const metadata: Metadata = {
   authors: [{ name: 'Grishmin Karki', url: 'https://github.com/karkigrishmin' }],
   creator: 'Grishmin Karki',
   metadataBase: new URL('https://karkigrishmin.github.io'),
+  alternates: {
+    canonical: 'https://karkigrishmin.github.io/',
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: 'https://karkigrishmin.github.io/',
     title: 'Grishmin Karki - Senior Frontend Engineer',
     description:
-      'Senior Frontend Engineer specializing in React, Next.js, and modern web technologies.',
+      'Senior Frontend Engineer with 4+ years building scalable React and Next.js applications. Specialized in TypeScript, Web3, and modern frontend architecture. Based in Kathmandu, Nepal.',
     siteName: 'Grishmin Karki Portfolio',
     images: [
       {
@@ -69,7 +72,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Grishmin Karki - Senior Frontend Engineer',
     description:
-      'Senior Frontend Engineer specializing in React, Next.js, and modern web technologies.',
+      'Senior Frontend Engineer with 4+ years building scalable React and Next.js applications. Specialized in TypeScript, Web3, and modern frontend architecture.',
     creator: '@karkigrishmin',
     images: ['/og-image.png'],
   },
@@ -84,8 +87,55 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Grishmin Karki',
+    alternateName: 'Grishmin',
+    jobTitle: 'Senior Frontend Engineer',
+    description:
+      'Senior Frontend Engineer with 4+ years of experience specializing in building scalable, user-centric applications.',
+    url: 'https://karkigrishmin.github.io',
+    image: 'https://karkigrishmin.github.io/og-image.png',
+    sameAs: [
+      'https://github.com/karkigrishmin',
+      'https://linkedin.com/in/karkigrishmin',
+      'https://twitter.com/karkigrishmin',
+    ],
+    knowsAbout: [
+      'React',
+      'Next.js',
+      'TypeScript',
+      'JavaScript',
+      'Svelte',
+      'Web3',
+      'Blockchain',
+      'Frontend Development',
+      'Web Development',
+      'UI/UX',
+      'Responsive Design',
+      'Tailwind CSS',
+      'Framer Motion',
+    ],
+    alumniOf: {
+      '@type': 'EducationalOrganization',
+      name: 'Tribhuvan University',
+    },
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Kathmandu',
+      addressCountry: 'Nepal',
+    },
+  }
+
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body
         className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased`}
       >
