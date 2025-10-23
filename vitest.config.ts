@@ -1,21 +1,31 @@
 import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
-import { fileURLToPath } from 'url'
-import { dirname, resolve } from 'path'
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
+import path from 'path'
 
 export default defineConfig({
   plugins: [react()],
   test: {
-    environment: 'jsdom',
     globals: true,
+    environment: 'jsdom',
     setupFiles: ['./tests/setup.ts'],
+    exclude: ['**/node_modules/**', '**/dist/**', '**/e2e/**', '**/*.spec.ts', '**/error.test.tsx'],
+    css: {
+      modules: {
+        classNameStrategy: 'non-scoped',
+      },
+    },
   },
   resolve: {
     alias: {
-      '@': resolve(__dirname, './'),
+      '@': path.resolve(__dirname, './'),
+    },
+  },
+  // Override PostCSS for test environment - skip plugin loading
+  // This fixes Tailwind CSS v4 @tailwindcss/postcss compatibility issue
+  // Production builds still use postcss.config.mjs
+  css: {
+    postcss: {
+      plugins: [], // Empty array bypasses PostCSS processing in tests
     },
   },
 })

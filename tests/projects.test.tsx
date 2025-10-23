@@ -32,9 +32,10 @@ describe('Projects Section', () => {
   it('renders project technologies', () => {
     render(<Projects />)
 
-    expect(screen.getByText('React')).toBeDefined()
-    expect(screen.getByText('Next.js')).toBeDefined()
-    expect(screen.getByText('TypeScript')).toBeDefined()
+    // Use getAllByText since technologies appear multiple times
+    expect(screen.getAllByText('React').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('Next.js').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('TypeScript').length).toBeGreaterThan(0)
   })
 
   it('renders project links', () => {

@@ -70,9 +70,10 @@ describe('Hero Section', () => {
   })
 
   it('has hero section id', () => {
-    const { container } = render(<Hero />)
+    render(<Hero />)
 
-    const section = container.querySelector('#hero')
-    expect(section).toBeDefined()
+    // Use screen query to avoid jsdom querySelector issues
+    const section = document.querySelector('#hero')
+    expect(section).not.toBeNull()
   })
 })
