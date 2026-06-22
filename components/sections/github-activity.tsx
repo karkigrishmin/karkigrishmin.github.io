@@ -78,11 +78,22 @@ export function GithubActivity() {
       aria-label="GitHub activity"
       className="mx-auto w-full max-w-6xl px-6 py-16 lg:px-8"
     >
-      <header className="mb-8 flex items-center gap-2.5">
-        <span aria-hidden="true" className="bg-accent h-1.5 w-1.5 shrink-0 rounded-full" />
-        <span className="text-muted font-mono text-xs tracking-[0.18em] uppercase">
-          Latest on GitHub
+      <header className="mb-8 flex items-center justify-between gap-4">
+        <span className="flex items-center gap-2.5">
+          <span aria-hidden="true" className="bg-accent h-1.5 w-1.5 shrink-0 rounded-full" />
+          <span className="text-muted font-mono text-xs tracking-[0.18em] uppercase">
+            Latest on GitHub
+          </span>
         </span>
+        <a
+          href={personalInfo.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-muted hover:text-accent-ink focus-visible:outline-accent inline-flex items-center gap-1.5 font-mono text-xs tracking-[0.12em] transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2"
+        >
+          @karkigrishmin
+          <span aria-hidden="true">↗</span>
+        </a>
       </header>
 
       {state.status === 'loading' && (
@@ -105,7 +116,10 @@ export function GithubActivity() {
       )}
 
       {state.status === 'error' && (
-        <div className="border-border rounded-xl border px-5 py-4">
+        <div className="border-border flex flex-col items-center gap-3 rounded-xl border border-dashed px-6 py-12 text-center">
+          <p className="text-muted font-sans text-sm leading-relaxed">
+            Couldn&apos;t load live repositories right now — the work still lives on GitHub.
+          </p>
           <a
             href={personalInfo.github}
             target="_blank"
@@ -113,10 +127,10 @@ export function GithubActivity() {
             className={cn(
               'inline-flex items-center gap-1.5',
               'font-mono text-xs tracking-[0.18em] uppercase',
-              'text-muted hover:text-accent-ink transition-colors duration-200'
+              'text-accent-ink hover:text-foreground focus-visible:outline-accent transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2'
             )}
           >
-            Find me on GitHub
+            Browse the repositories
             <span aria-hidden="true">↗</span>
           </a>
         </div>

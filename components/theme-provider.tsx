@@ -15,7 +15,7 @@ export function ThemeProvider({
   children,
   attribute = 'data-theme',
   defaultTheme = 'dark',
-  enableSystem = true,
+  enableSystem = false,
   storageKey = 'grishmin-theme',
   ...props
 }: ThemeProviderProps) {
