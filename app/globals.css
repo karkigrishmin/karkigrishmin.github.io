@@ -118,3 +118,13 @@
     border-radius: 2px;
   }
 }
+
+/* Scroll-reveal content must never gate visibility: force the revealed state
+   when printing so save-to-PDF captures every section, scrolled or not. */
+@media print {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+}

@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useReducedMotion } from '@/lib/use-reduced-motion'
+import { cn } from '@/lib/utils'
 
 interface RevealProps {
   children: React.ReactNode
@@ -16,7 +17,7 @@ export function Reveal({ children, className, delay = 0 }: RevealProps) {
 
   return (
     <motion.div
-      className={className}
+      className={cn('reveal', className)}
       initial={{ opacity: 0, y: 24, clipPath: 'inset(0 0 18% 0)' }}
       whileInView={{ opacity: 1, y: 0, clipPath: 'inset(0 0 0% 0)' }}
       viewport={{ once: true, margin: '-12%' }}
