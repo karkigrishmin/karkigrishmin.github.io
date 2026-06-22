@@ -1,9 +1,11 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { Reveal } from '@/components/primitives/reveal'
 import { MagneticButton } from '@/components/primitives/magnetic-button'
 import { InteractiveName } from '@/components/primitives/interactive-name'
+import { HeroCode } from '@/components/code-view/hero-code'
+import { useLens } from '@/lib/lens-context'
 import { useReducedMotion } from '@/lib/use-reduced-motion'
 import { personalInfo } from '@/lib/constants'
 import { cn } from '@/lib/utils'
@@ -18,6 +20,7 @@ function scrollToSection(id: string) {
 
 export function Hero() {
   const reduced = useReducedMotion()
+  const { lens } = useLens()
 
   return (
     <section
@@ -33,6 +36,44 @@ export function Hero() {
         </p>
       </Reveal>
 
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={lens}
+          initial={reduced ? false : { opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={reduced ? { opacity: 0 } : { opacity: 0, y: -8 }}
+          transition={{ duration: reduced ? 0 : 0.28, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {lens === 'code' ? <HeroCode /> : <HeroDesign reduced={reduced} />}
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Scroll cue */}
+      <button
+        type="button"
+        onClick={() => scrollToSection('about')}
+        aria-label="Scroll to about section"
+        className={cn(
+          'group absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2',
+          'text-muted font-mono text-[0.625rem] tracking-[0.3em] uppercase',
+          'hover:text-accent-ink transition-colors min-[640px]:flex'
+        )}
+      >
+        <span>Scroll</span>
+        <motion.span
+          aria-hidden
+          className="bg-border group-hover:bg-accent block h-8 w-px origin-top"
+          animate={reduced ? undefined : { scaleY: [0.3, 1, 0.3] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+        />
+      </button>
+    </section>
+  )
+}
+
+function HeroDesign({ reduced }: { reduced: boolean }) {
+  return (
+    <>
       <div className="grid w-full grid-cols-1 gap-y-10 lg:grid-cols-12">
         {/* Left content well — the masthead lives here; the right breathes */}
         <div className="lg:col-span-10 xl:col-span-9">
@@ -117,26 +158,6 @@ export function Hero() {
           ))}
         </div>
       </Reveal>
-
-      {/* Scroll cue */}
-      <button
-        type="button"
-        onClick={() => scrollToSection('about')}
-        aria-label="Scroll to about section"
-        className={cn(
-          'group absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2',
-          'text-muted font-mono text-[0.625rem] tracking-[0.3em] uppercase',
-          'hover:text-accent-ink transition-colors min-[640px]:flex'
-        )}
-      >
-        <span>Scroll</span>
-        <motion.span
-          aria-hidden
-          className="bg-border group-hover:bg-accent block h-8 w-px origin-top"
-          animate={reduced ? undefined : { scaleY: [0.3, 1, 0.3] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-        />
-      </button>
-    </section>
+    </>
   )
 }

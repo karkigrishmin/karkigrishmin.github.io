@@ -1,10 +1,12 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { projects } from '@/lib/constants'
 import { SectionLabel } from '@/components/primitives/section-label'
 import { Reveal } from '@/components/primitives/reveal'
+import { ProjectsCode } from '@/components/code-view/projects-code'
+import { useLens } from '@/lib/lens-context'
 import { useReducedMotion } from '@/lib/use-reduced-motion'
 
 interface Project {
@@ -212,6 +214,9 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
 }
 
 export function Projects() {
+  const { lens } = useLens()
+  const reduced = useReducedMotion()
+
   return (
     <section
       id="projects"
@@ -224,10 +229,29 @@ export function Projects() {
         <SectionLabel index={4}>Projects</SectionLabel>
       </Reveal>
 
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={lens}
+          className="mt-8"
+          initial={reduced ? false : { opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={reduced ? { opacity: 0 } : { opacity: 0, y: -8 }}
+          transition={{ duration: reduced ? 0 : 0.28, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {lens === 'code' ? <ProjectsCode /> : <ProjectsDesign />}
+        </motion.div>
+      </AnimatePresence>
+    </section>
+  )
+}
+
+function ProjectsDesign() {
+  return (
+    <>
       <Reveal delay={0.06}>
         <p
           className={cn(
-            'font-display text-foreground mt-8',
+            'font-display text-foreground',
             'text-[clamp(1.75rem,4.5vw,3rem)] leading-[1.1] font-semibold tracking-[-0.02em] text-balance'
           )}
           aria-hidden="true"
@@ -246,6 +270,6 @@ export function Projects() {
 
       {/* Closing hairline */}
       <div className="border-border border-t" aria-hidden="true" />
-    </section>
+    </>
   )
 }

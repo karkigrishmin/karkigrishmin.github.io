@@ -1,9 +1,13 @@
 'use client'
 
+import { AnimatePresence, motion } from 'framer-motion'
 import { about } from '@/lib/constants'
 import { Reveal } from '@/components/primitives/reveal'
 import { SectionLabel } from '@/components/primitives/section-label'
 import { StatNumber } from '@/components/primitives/stat-number'
+import { AboutCode } from '@/components/code-view/about-code'
+import { useLens } from '@/lib/lens-context'
+import { useReducedMotion } from '@/lib/use-reduced-motion'
 import { cn } from '@/lib/utils'
 
 const STATS = [
@@ -31,6 +35,9 @@ const STATS = [
 ] as const
 
 export function About() {
+  const { lens } = useLens()
+  const reduced = useReducedMotion()
+
   return (
     <section id="about" className="relative mx-auto w-full max-w-6xl px-6 py-24 sm:py-32 lg:px-8">
       <h2 className="sr-only">About</h2>
@@ -39,7 +46,26 @@ export function About() {
         <SectionLabel index={1}>About</SectionLabel>
       </Reveal>
 
-      <div className="mt-10 grid grid-cols-1 gap-y-16 lg:grid-cols-12 lg:gap-x-16 lg:gap-y-0">
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={lens}
+          className="mt-10"
+          initial={reduced ? false : { opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={reduced ? { opacity: 0 } : { opacity: 0, y: -8 }}
+          transition={{ duration: reduced ? 0 : 0.28, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {lens === 'code' ? <AboutCode /> : <AboutDesign />}
+        </motion.div>
+      </AnimatePresence>
+    </section>
+  )
+}
+
+function AboutDesign() {
+  return (
+    <>
+      <div className="grid grid-cols-1 gap-y-16 lg:grid-cols-12 lg:gap-x-16 lg:gap-y-0">
         <div className="lg:col-span-7 xl:col-span-6">
           <Reveal delay={0.1}>
             <p
@@ -98,6 +124,6 @@ export function About() {
           </Reveal>
         </div>
       </div>
-    </section>
+    </>
   )
 }

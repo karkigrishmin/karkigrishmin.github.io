@@ -1,9 +1,12 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
+import { LensProvider } from '@/lib/lens-context'
 import { Hero } from '@/components/sections/hero'
 import { personalInfo } from '@/lib/constants'
 
 vi.mock('@/lib/use-reduced-motion', () => ({ useReducedMotion: () => true }))
+
+const renderWithLens = (ui: React.ReactElement) => render(<LensProvider>{ui}</LensProvider>)
 
 // Mock getElementById for scroll behavior
 global.document.getElementById = vi.fn(
@@ -15,38 +18,38 @@ global.document.getElementById = vi.fn(
 
 describe('Hero Section', () => {
   it('renders the name as the sole h1', () => {
-    render(<Hero />)
+    renderWithLens(<Hero />)
 
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(personalInfo.name)
   })
 
   it('renders the role', () => {
-    render(<Hero />)
+    renderWithLens(<Hero />)
 
     expect(screen.getByText(personalInfo.role)).toBeInTheDocument()
   })
 
   it('renders the location', () => {
-    render(<Hero />)
+    renderWithLens(<Hero />)
 
     expect(screen.getByText(personalInfo.location)).toBeInTheDocument()
   })
 
   it('renders both call-to-action buttons', () => {
-    render(<Hero />)
+    renderWithLens(<Hero />)
 
     expect(screen.getByRole('button', { name: /view work/i })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /get in touch/i })).toBeInTheDocument()
   })
 
   it('renders the tagline', () => {
-    render(<Hero />)
+    renderWithLens(<Hero />)
 
     expect(screen.getByText(/Crafting pixel-perfect/i)).toBeInTheDocument()
   })
 
   it('scrolls to projects when the primary CTA is clicked', () => {
-    render(<Hero />)
+    renderWithLens(<Hero />)
 
     fireEvent.click(screen.getByRole('button', { name: /view work/i }))
 
@@ -54,7 +57,7 @@ describe('Hero Section', () => {
   })
 
   it('scrolls to contact when the secondary CTA is clicked', () => {
-    render(<Hero />)
+    renderWithLens(<Hero />)
 
     fireEvent.click(screen.getByRole('button', { name: /get in touch/i }))
 
@@ -62,7 +65,7 @@ describe('Hero Section', () => {
   })
 
   it('provides an accessible scroll cue to the about section', () => {
-    render(<Hero />)
+    renderWithLens(<Hero />)
 
     const scrollCue = screen.getByRole('button', { name: /scroll to about/i })
     fireEvent.click(scrollCue)
@@ -71,7 +74,7 @@ describe('Hero Section', () => {
   })
 
   it('has a hero section landmark', () => {
-    render(<Hero />)
+    renderWithLens(<Hero />)
 
     const section = document.querySelector('#hero')
     expect(section).not.toBeNull()
