@@ -5,6 +5,7 @@ import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import { LensProvider } from '@/lib/lens-context'
 import { GrainOverlay } from '@/components/primitives/grain-overlay'
+import { CommandPalette } from '@/components/command-palette'
 
 const fraunces = Fraunces({
   variable: '--font-fraunces',
@@ -147,6 +148,7 @@ export default function RootLayout({
           <LensProvider>
             <GrainOverlay />
             {children}
+            <CommandPalette />
           </LensProvider>
         </ThemeProvider>
       </body>
