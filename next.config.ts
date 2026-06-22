@@ -1,8 +1,12 @@
 import type { NextConfig } from 'next'
 
+// Empty for production (served at the domain root); set to '/dev' by the dev
+// preview workflow so assets resolve under karkigrishmin.github.io/dev/.
+const basePath = process.env.PAGES_BASE_PATH ?? ''
+
 const nextConfig: NextConfig = {
   output: 'export',
-  basePath: '',
+  basePath,
   images: {
     unoptimized: true,
   },
