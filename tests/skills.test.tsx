@@ -17,7 +17,7 @@ describe('Skills Section', () => {
   it('renders section heading', () => {
     render(<Skills />)
 
-    expect(screen.getByText('Skills & Expertise')).toBeDefined()
+    expect(screen.getByRole('heading', { name: /skills/i })).toBeDefined()
   })
 
   it('renders skill categories', () => {
@@ -77,10 +77,18 @@ describe('Skills Section', () => {
   })
 
   it('renders all 6 skill categories', () => {
-    const { container } = render(<Skills />)
+    render(<Skills />)
 
-    const categories = container.querySelectorAll('[class*="space-y"]')
-    // Should have at least 6 category sections
-    expect(categories.length).toBeGreaterThanOrEqual(6)
+    const categoryNames = [
+      'Core Frontend',
+      'Styling & Design',
+      'State & Data',
+      'Testing & Quality',
+      'Tools & Practices',
+      'Web3 & Blockchain',
+    ]
+    categoryNames.forEach((name) => {
+      expect(screen.getByText(name)).toBeDefined()
+    })
   })
 })

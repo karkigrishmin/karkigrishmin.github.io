@@ -1,82 +1,123 @@
 'use client'
 
-import { motion, useInView } from 'framer-motion'
-import { useRef } from 'react'
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
+import { cn } from '@/lib/utils'
 import { skills } from '@/lib/constants'
+import { SectionLabel } from '@/components/primitives/section-label'
+import { Reveal } from '@/components/primitives/reveal'
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
+const BENTO_CONFIG: Record<string, { index: string; gridClass: string; padClass: string }> = {
+  'Core Frontend': {
+    index: '01',
+    gridClass: 'lg:col-span-2 lg:row-span-2',
+    padClass: 'p-8 sm:p-10',
+  },
+  'Styling & Design': {
+    index: '02',
+    gridClass: 'lg:col-span-1',
+    padClass: 'p-6',
+  },
+  'State & Data': {
+    index: '03',
+    gridClass: 'lg:col-span-1',
+    padClass: 'p-6',
+  },
+  'Testing & Quality': {
+    index: '04',
+    gridClass: 'lg:col-span-2',
+    padClass: 'p-6 sm:p-8',
+  },
+  'Tools & Practices': {
+    index: '05',
+    gridClass: 'lg:col-span-1',
+    padClass: 'p-6',
+  },
+  'Web3 & Blockchain': {
+    index: '06',
+    gridClass: 'lg:col-span-1',
+    padClass: 'p-6',
   },
 }
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 },
+interface BentoCellProps {
+  category: string
+  skillList: string[]
+  delay: number
+}
+
+function BentoCell({ category, skillList, delay }: BentoCellProps) {
+  const config = BENTO_CONFIG[category] ?? {
+    index: '??',
+    gridClass: '',
+    padClass: 'p-6',
+  }
+
+  return (
+    <Reveal delay={delay} className={config.gridClass}>
+      <div
+        className={cn(
+          'group bg-surface border-border h-full rounded-xl border',
+          'hover:bg-foreground/[0.02] hover:border-foreground/[0.12] transition-colors duration-300',
+          config.padClass
+        )}
+      >
+        <p className="text-muted mb-5 flex items-center gap-2.5 font-mono text-xs tracking-[0.18em] uppercase">
+          <span className="text-accent-ink opacity-60">[{config.index}]</span>
+          <span>{category}</span>
+        </p>
+
+        <div className="flex flex-wrap gap-2">
+          {skillList.map((skill) => (
+            <span
+              key={skill}
+              className={cn(
+                'border-border text-muted rounded-full border px-3 py-1 font-mono text-xs',
+                'hover:border-accent hover:text-accent-ink cursor-default transition-colors duration-200'
+              )}
+            >
+              {skill}
+            </span>
+          ))}
+        </div>
+      </div>
+    </Reveal>
+  )
 }
 
 export function Skills() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
+  const entries = Object.entries(skills)
+
+  const delays = [0, 0.08, 0.12, 0.1, 0.18, 0.22]
 
   return (
-    <section
-      id="skills"
-      ref={ref}
-      className="py-20 sm:py-32 px-4 sm:px-6 lg:px-8"
-    >
-      <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-            Skills & Expertise
-          </h2>
-          <p className="text-sm sm:text-base md:text-lg text-muted max-w-2xl mx-auto px-4">
-            A comprehensive toolkit built over years of hands-on experience
-          </p>
-        </motion.div>
+    <section id="skills" className="relative mx-auto w-full max-w-6xl px-6 py-24 sm:py-32 lg:px-8">
+      <h2 className="sr-only">Skills</h2>
 
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
+      <Reveal delay={0}>
+        <SectionLabel index={2}>Skills</SectionLabel>
+      </Reveal>
+
+      <Reveal delay={0.05}>
+        <p
+          className={cn(
+            'font-display text-foreground mt-8',
+            'text-[clamp(1.75rem,4.5vw,3rem)] leading-[1.1] font-semibold tracking-[-0.02em] text-balance'
+          )}
         >
-          {Object.entries(skills).map(([category, skillList]) => (
-            <motion.div key={category} variants={itemVariants}>
-              <Card className="h-full group cursor-default">
-                <CardHeader>
-                  <CardTitle className="text-base sm:text-lg group-hover:text-primary transition-colors duration-200">
-                    {category}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-wrap gap-2">
-                    {skillList.map((skill) => (
-                      <Badge
-                        key={skill}
-                        variant="secondary"
-                        className="md:hover:!scale-110 hover:!bg-primary hover:!text-primary-foreground hover:!border-transparent transition-all duration-200 cursor-pointer"
-                      >
-                        {skill}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </motion.div>
+          A toolkit refined across
+          <br />
+          six years of production work.
+        </p>
+      </Reveal>
+
+      <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+        {entries.map(([category, skillList], i) => (
+          <BentoCell
+            key={category}
+            category={category}
+            skillList={skillList}
+            delay={delays[i] ?? 0.1}
+          />
+        ))}
       </div>
     </section>
   )
