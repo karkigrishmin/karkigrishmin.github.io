@@ -3,19 +3,29 @@
 import { useCallback, useEffect, useState } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Quote, Linkedin, ChevronLeft, ChevronRight } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
+import { cn } from '@/lib/utils'
 import { testimonials } from '@/lib/constants'
+import { SectionLabel } from '@/components/primitives/section-label'
+import { Reveal } from '@/components/primitives/reveal'
 
-// Helper function to get initials from name
-const getInitials = (name: string): string => {
+function getInitials(name: string): string {
   return name
     .split(' ')
     .map((n) => n[0])
     .join('')
     .toUpperCase()
     .slice(0, 2)
+}
+
+function InitialsAvatar({ name }: { name: string }) {
+  return (
+    <div
+      aria-hidden="true"
+      className="border-border bg-surface text-muted flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border font-mono text-xs font-medium tracking-wider uppercase"
+    >
+      {getInitials(name)}
+    </div>
+  )
 }
 
 export function Testimonials() {
@@ -25,7 +35,6 @@ export function Testimonials() {
 
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([])
-  const [expandedCards, setExpandedCards] = useState<{ [key: string]: boolean }>({})
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev()
@@ -41,13 +50,6 @@ export function Testimonials() {
     },
     [emblaApi]
   )
-
-  const toggleExpand = (id: string) => {
-    setExpandedCards((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }))
-  }
 
   const onInit = useCallback(() => {
     if (emblaApi) {
@@ -78,146 +80,116 @@ export function Testimonials() {
   }, [emblaApi, onInit, onSelect])
 
   return (
-    <section id="testimonials" className="bg-secondary/50 px-4 py-20 sm:px-6 sm:py-32 lg:px-8">
-      <div className="mx-auto max-w-7xl">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6 }}
-          className="mb-16 text-center"
+    <section
+      id="testimonials"
+      className="relative mx-auto w-full max-w-6xl px-6 py-24 sm:py-32 lg:px-8"
+    >
+      <Reveal delay={0}>
+        <SectionLabel index={5}>Recommendations</SectionLabel>
+      </Reveal>
+
+      <h2 className="sr-only">Testimonials</h2>
+
+      <Reveal delay={0.06}>
+        <p
+          aria-hidden="true"
+          className="font-display text-foreground mt-6 text-[clamp(1.75rem,4.5vw,3rem)] leading-[1.1] font-semibold tracking-[-0.02em] text-balance"
         >
-          <h2 className="mb-4 text-3xl font-bold sm:text-4xl lg:text-5xl">What People Say</h2>
-          <p className="text-muted-foreground mx-auto max-w-2xl text-sm sm:text-base md:text-lg">
-            Recommendations from colleagues, managers, and clients
-          </p>
-        </motion.div>
+          What people say.
+        </p>
+      </Reveal>
 
-        {/* Carousel */}
-        <div className="relative">
-          <div className="overflow-hidden" ref={emblaRef}>
-            <div className="flex">
-              {testimonials.map((testimonial) => {
-                const isExpanded = expandedCards[testimonial.id]
-                const shouldTruncate = testimonial.quote.length > 200
-
-                return (
-                  <div
-                    key={testimonial.id}
-                    className="min-w-0 flex-[0_0_100%] pr-6 sm:flex-[0_0_50%] lg:flex-[0_0_33.333%]"
+      <div className="relative mt-12">
+        <div className="overflow-hidden" ref={emblaRef}>
+          <div className="flex gap-5">
+            {testimonials.map((testimonial, i) => (
+              <div
+                key={testimonial.id}
+                className="min-w-0 flex-[0_0_100%] sm:flex-[0_0_calc(50%-10px)] lg:flex-[0_0_calc(33.333%-14px)]"
+              >
+                <Reveal delay={0.08 + i * 0.06}>
+                  <a
+                    href={testimonial.linkedinUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cn(
+                      'group border-border bg-surface flex h-full flex-col rounded-xl border p-8',
+                      'hover:border-foreground/20 transition-colors duration-300'
+                    )}
                   >
-                    <Card className="border-border/40 hover:border-border flex h-full flex-col transition-all duration-300 hover:shadow-lg">
-                      <CardContent className="flex h-full flex-col pt-6">
-                        {/* Quote Icon */}
-                        <div className="mb-4">
-                          <Quote className="text-primary/50 h-8 w-8" />
-                        </div>
+                    <span
+                      aria-hidden="true"
+                      className="font-display text-border group-hover:text-accent-ink text-[5rem] leading-[0.75] transition-colors duration-300 select-none"
+                    >
+                      &ldquo;
+                    </span>
 
-                        {/* Testimonial Text */}
-                        <div className="mb-6 flex-1">
-                          <AnimatePresence mode="wait">
-                            <motion.p
-                              key={isExpanded ? 'expanded' : 'collapsed'}
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                              exit={{ opacity: 0 }}
-                              transition={{ duration: 0.2 }}
-                              className={`text-muted-foreground text-sm leading-relaxed sm:text-base ${
-                                !isExpanded && shouldTruncate ? 'line-clamp-4' : ''
-                              }`}
-                            >
-                              &quot;{testimonial.quote}&quot;
-                            </motion.p>
-                          </AnimatePresence>
+                    <p className="text-foreground/80 mt-4 flex-1 font-sans text-base leading-relaxed">
+                      {testimonial.quote}
+                    </p>
 
-                          {/* Read More/Less Button */}
-                          {shouldTruncate && (
-                            <button
-                              onClick={() => toggleExpand(testimonial.id)}
-                              className="text-primary hover:text-primary/80 mt-2 text-sm font-medium transition-colors duration-200"
-                            >
-                              {isExpanded ? 'Read less' : 'Read more'}
-                            </button>
-                          )}
-                        </div>
-
-                        {/* Author Info */}
-                        <div className="border-border/40 flex items-center gap-4 border-t pt-4">
-                          {/* Avatar or Initials */}
-                          <div className="flex-shrink-0">
-                            {testimonial.image ? (
-                              <img
-                                src={testimonial.image}
-                                alt={testimonial.name}
-                                className="h-12 w-12 rounded-full object-cover"
-                              />
-                            ) : (
-                              <div className="from-primary to-accent flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br text-sm font-semibold text-white">
-                                {getInitials(testimonial.name)}
-                              </div>
-                            )}
-                          </div>
-
-                          {/* Name and Role */}
-                          <div className="min-w-0 flex-1">
-                            <h4 className="truncate text-sm font-semibold sm:text-base">
-                              {testimonial.name}
-                            </h4>
-                            <p className="text-muted-foreground truncate text-xs sm:text-sm">
-                              {testimonial.role} at {testimonial.company}
-                            </p>
-                          </div>
-
-                          {/* LinkedIn Link */}
-                          <a
-                            href={testimonial.linkedinUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-muted-foreground hover:text-primary flex-shrink-0 transition-colors duration-200"
-                            aria-label={`View ${testimonial.name}'s LinkedIn profile`}
-                          >
-                            <Linkedin className="h-5 w-5" />
-                          </a>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </div>
-                )
-              })}
-            </div>
+                    <div className="border-border mt-8 flex items-center gap-4 border-t pt-6">
+                      <InitialsAvatar name={testimonial.name} />
+                      <div className="min-w-0 flex-1">
+                        <p className="font-display text-foreground text-sm leading-tight font-semibold">
+                          {testimonial.name}
+                        </p>
+                        <p className="text-muted mt-0.5 font-mono text-[0.65rem] tracking-[0.18em] uppercase">
+                          {testimonial.role}
+                          <span aria-hidden className="mx-1.5 opacity-40">
+                            ·
+                          </span>
+                          {testimonial.company}
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </Reveal>
+              </div>
+            ))}
           </div>
+        </div>
 
-          {/* Navigation Arrows */}
-          <button
-            onClick={scrollPrev}
-            className="bg-background/80 border-border hover:bg-accent hover:text-accent-foreground absolute top-1/2 left-0 z-10 flex h-10 w-10 -translate-x-4 -translate-y-1/2 items-center justify-center rounded-full border shadow-lg backdrop-blur-sm transition-all duration-200 sm:h-12 sm:w-12 sm:-translate-x-12"
-            aria-label="Previous testimonial"
-          >
-            <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
-          </button>
-          <button
-            onClick={scrollNext}
-            className="bg-background/80 border-border hover:bg-accent hover:text-accent-foreground absolute top-1/2 right-0 z-10 flex h-10 w-10 translate-x-4 -translate-y-1/2 items-center justify-center rounded-full border shadow-lg backdrop-blur-sm transition-all duration-200 sm:h-12 sm:w-12 sm:translate-x-12"
-            aria-label="Next testimonial"
-          >
-            <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
-          </button>
-
-          {/* Dots Navigation */}
-          <div className="mt-8 flex justify-center gap-2">
+        <div className="mt-10 flex items-center justify-between">
+          <div className="flex items-center gap-2">
             {scrollSnaps.map((_, index) => (
               <button
                 key={index}
                 onClick={() => scrollTo(index)}
-                className={`h-2 w-2 rounded-full transition-all duration-300 ${
-                  index === selectedIndex
-                    ? 'bg-primary w-8'
-                    : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
-                }`}
                 aria-label={`Go to testimonial ${index + 1}`}
+                className={cn(
+                  'h-px transition-all duration-300',
+                  index === selectedIndex ? 'bg-accent-ink w-8' : 'bg-border hover:bg-muted w-4'
+                )}
               />
             ))}
+          </div>
+
+          <div className="flex items-center gap-3">
+            <button
+              onClick={scrollPrev}
+              aria-label="Previous testimonial"
+              className={cn(
+                'flex h-9 w-9 items-center justify-center rounded-full',
+                'border-border text-muted border',
+                'hover:border-foreground/30 hover:text-foreground transition-colors duration-200',
+                'font-mono text-sm'
+              )}
+            >
+              ←
+            </button>
+            <button
+              onClick={scrollNext}
+              aria-label="Next testimonial"
+              className={cn(
+                'flex h-9 w-9 items-center justify-center rounded-full',
+                'border-border text-muted border',
+                'hover:border-foreground/30 hover:text-foreground transition-colors duration-200',
+                'font-mono text-sm'
+              )}
+            >
+              →
+            </button>
           </div>
         </div>
       </div>

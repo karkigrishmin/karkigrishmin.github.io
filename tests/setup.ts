@@ -1,5 +1,20 @@
 import '@testing-library/jest-dom'
 
+// Stub ResizeObserver (not in jsdom) — required by embla-carousel
+class ResizeObserverStub {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+Object.defineProperty(window, 'ResizeObserver', {
+  writable: true,
+  value: ResizeObserverStub,
+})
+Object.defineProperty(global, 'ResizeObserver', {
+  writable: true,
+  value: ResizeObserverStub,
+})
+
 // Stub IntersectionObserver (not in jsdom) — required by framer-motion useInView
 class IntersectionObserverStub {
   observe() {}

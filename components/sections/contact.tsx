@@ -1,135 +1,104 @@
 'use client'
 
-import { motion, useInView } from 'framer-motion'
-import { useRef } from 'react'
-import { Mail, Github, Linkedin, Twitter } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import { contact } from '@/lib/constants'
+import { cn } from '@/lib/utils'
+import { contact, personalInfo } from '@/lib/constants'
+import { SectionLabel } from '@/components/primitives/section-label'
+import { Reveal } from '@/components/primitives/reveal'
 
-const iconMap = {
-  Github,
-  Linkedin,
-  Twitter,
-}
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-}
-
-const itemVariants = {
-  hidden: { opacity: 0, scale: 0.8 },
-  visible: { opacity: 1, scale: 1 },
+const SOCIAL_URLS: Record<string, string> = {
+  GitHub: personalInfo.github,
+  LinkedIn: personalInfo.linkedin,
+  Twitter: personalInfo.twitter,
 }
 
 export function Contact() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
-
   return (
-    <section
-      id="contact"
-      ref={ref}
-      className="py-20 sm:py-32 px-4 sm:px-6 lg:px-8 bg-secondary"
-    >
-      <div className="max-w-4xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-            {contact.title}
-          </h2>
-          <p className="text-sm sm:text-base md:text-lg text-muted max-w-2xl mx-auto px-4">
+    <>
+      <section
+        id="contact"
+        className="relative mx-auto w-full max-w-6xl px-6 py-24 sm:py-32 lg:px-8"
+      >
+        <Reveal delay={0}>
+          <SectionLabel index={6}>Contact</SectionLabel>
+        </Reveal>
+
+        <h2 className="sr-only">Get In Touch</h2>
+
+        <Reveal delay={0.08}>
+          <p
+            className={cn(
+              'font-display text-foreground mt-6 leading-[1.0] font-semibold tracking-[-0.03em] text-balance',
+              'text-[clamp(2rem,7vw,5rem)]'
+            )}
+            aria-hidden="true"
+          >
+            Let&rsquo;s build something.
+          </p>
+        </Reveal>
+
+        <Reveal delay={0.16}>
+          <p className="text-muted mt-6 max-w-xl font-sans text-base leading-relaxed text-pretty sm:text-lg">
             {contact.description}
           </p>
-        </motion.div>
+        </Reveal>
 
-        <Card className="max-w-2xl mx-auto p-4 sm:p-8 md:p-12">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-center mb-8"
-          >
-            <Button
-              size="lg"
-              asChild
-              className="text-sm sm:text-base md:text-lg px-4 sm:px-6 md:px-8 py-4 sm:py-5 md:py-6 w-full sm:w-auto"
+        <Reveal delay={0.24}>
+          <div className="mt-10">
+            <a
+              href={`mailto:${personalInfo.email}`}
+              className={cn(
+                'font-display text-foreground inline-block',
+                'text-[clamp(1.15rem,3.5vw,2.25rem)] font-semibold tracking-[-0.02em]',
+                'underline-offset-8 transition-colors duration-200',
+                'hover:text-accent-ink hover:underline'
+              )}
             >
-              <a
-                href={`mailto:${contact.email}`}
-                className="flex items-center justify-center gap-2 sm:gap-3 break-all sm:break-normal"
-              >
-                <Mail className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
-                <span className="truncate">{contact.email}</span>
-              </a>
-            </Button>
-          </motion.div>
-
-          <div className="relative my-12">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-border/20" />
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-card text-foreground font-medium">
-                or connect with me on
-              </span>
-            </div>
+              {personalInfo.email}
+            </a>
           </div>
+        </Reveal>
 
-          <motion.div
-            className="flex justify-center gap-4"
-            variants={containerVariants}
-            initial="hidden"
-            animate={isInView ? 'visible' : 'hidden'}
-          >
+        <Reveal delay={0.32}>
+          <div className="border-border mt-12 flex flex-wrap items-center gap-x-8 gap-y-4 border-t pt-10">
             {contact.social.map((social) => {
-              const Icon = iconMap[social.icon as keyof typeof iconMap]
+              const url = SOCIAL_URLS[social.name] ?? social.url
               return (
-                <motion.div key={social.name} variants={itemVariants}>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    asChild
-                    className="w-14 h-14 md:hover:!scale-110 hover:!border-primary transition-all duration-200"
-                  >
-                    <a
-                      href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={social.name}
-                      className="w-full h-full flex items-center justify-center"
-                    >
-                      <Icon className="w-6 h-6" />
-                    </a>
-                  </Button>
-                </motion.div>
+                <a
+                  key={social.name}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cn(
+                    'text-muted font-mono text-xs tracking-[0.18em] uppercase',
+                    'hover:text-accent-ink transition-colors duration-200'
+                  )}
+                >
+                  {social.name}
+                </a>
               )
             })}
-          </motion.div>
-        </Card>
+          </div>
+        </Reveal>
+      </section>
 
-        {/* Footer */}
-        <motion.div
-          className="mt-16 text-center text-sm text-muted"
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-        >
-          <p className="px-4">
-            &copy; {new Date().getFullYear()} Grishmin Karki. Built with Next.js, TypeScript, and Tailwind CSS.
+      <footer className="mx-auto w-full max-w-6xl px-6 pb-10 lg:px-8">
+        <div className="border-border flex flex-col gap-3 border-t pt-8 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-muted font-mono text-[0.65rem] tracking-[0.18em] uppercase">
+            &copy; {new Date().getFullYear()} Grishmin Karki
           </p>
-        </motion.div>
-      </div>
-    </section>
+          <p className="text-muted font-mono text-[0.65rem] tracking-[0.18em] uppercase">
+            Built with Next.js
+            <span aria-hidden className="mx-2 opacity-40">
+              ·
+            </span>
+            TypeScript
+            <span aria-hidden className="mx-2 opacity-40">
+              ·
+            </span>
+            Tailwind CSS
+          </p>
+        </div>
+      </footer>
+    </>
   )
 }
