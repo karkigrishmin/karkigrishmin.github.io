@@ -15,6 +15,9 @@ interface Project {
   highlights: string[]
   link: string
   image?: string
+  stack: string[]
+  architectureNote: string
+  impact: string
 }
 
 const MOTIF_SYMBOLS: Record<string, string> = {
