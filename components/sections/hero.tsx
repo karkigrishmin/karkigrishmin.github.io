@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { Reveal } from '@/components/primitives/reveal'
 import { MagneticButton } from '@/components/primitives/magnetic-button'
+import { InteractiveName } from '@/components/primitives/interactive-name'
 import { useReducedMotion } from '@/lib/use-reduced-motion'
 import { personalInfo } from '@/lib/constants'
 import { cn } from '@/lib/utils'
@@ -59,10 +60,18 @@ export function Hero() {
 
           {/* The name — hero statement */}
           <Reveal delay={0.18}>
-            <h1 className="font-display text-foreground mt-7 text-[clamp(2.75rem,9vw,7.5rem)] leading-[0.95] font-semibold tracking-[-0.02em] text-balance sm:mt-9">
-              <span className="block">Grishmin </span>
+            <h1
+              aria-label={personalInfo.name}
+              className="font-display text-foreground mt-7 text-[clamp(2.75rem,9vw,7.5rem)] leading-[0.95] font-semibold tracking-[-0.02em] text-balance sm:mt-9"
+            >
               <span className="block">
-                Karki<span className="text-accent-ink">.</span>
+                <InteractiveName text="Grishmin" aria-hidden />
+              </span>{' '}
+              <span className="block">
+                <InteractiveName text="Karki" aria-hidden />
+                <span aria-hidden className="text-accent-ink">
+                  .
+                </span>
               </span>
             </h1>
           </Reveal>
