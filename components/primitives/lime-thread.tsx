@@ -80,8 +80,8 @@ export function LimeThread({ className }: LimeThreadProps) {
         d={pathD}
         fill="none"
         stroke="var(--accent)"
-        strokeWidth="2"
-        strokeOpacity="0.12"
+        strokeWidth="2.5"
+        strokeOpacity="0.16"
         strokeLinecap="round"
         filter="url(#lime-thread-glow)"
       />
@@ -89,9 +89,9 @@ export function LimeThread({ className }: LimeThreadProps) {
         d={pathD}
         fill="none"
         stroke="var(--accent)"
-        strokeWidth="1.5"
+        strokeWidth="1.75"
         strokeLinecap="round"
-        strokeOpacity="0.42"
+        strokeOpacity="0.52"
         style={{ pathLength: scrollYProgress }}
       />
     </svg>

@@ -22,24 +22,24 @@ export function LensToggle({ className }: { className?: string }) {
     >
       <span
         className={cn(
-          'px-3 py-1.5 transition-colors duration-300',
-          !isCode ? 'text-accent-ink' : 'text-muted'
+          'relative z-10 px-3 py-1.5 transition-colors duration-300',
+          !isCode ? 'text-foreground' : 'text-muted'
         )}
       >
         Design
       </span>
-      <span className="text-border">|</span>
+      <span className="text-border relative z-10">|</span>
       <span
         className={cn(
-          'px-3 py-1.5 transition-colors duration-300',
-          isCode ? 'text-accent-ink' : 'text-muted'
+          'relative z-10 px-3 py-1.5 transition-colors duration-300',
+          isCode ? 'text-foreground' : 'text-muted'
         )}
       >
         {'</>'}
       </span>
       <span
         className={cn(
-          'bg-accent/10 pointer-events-none absolute inset-y-0 w-1/2 rounded-full transition-all duration-300 ease-out',
+          'bg-foreground/[0.06] ring-border/70 pointer-events-none absolute inset-y-0 w-1/2 rounded-full ring-1 transition-all duration-300 ease-out ring-inset',
           isCode ? 'left-1/2' : 'left-0'
         )}
       />
