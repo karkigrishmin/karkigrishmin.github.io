@@ -85,7 +85,7 @@ export function Testimonials() {
       className="relative mx-auto w-full max-w-6xl px-6 py-24 sm:py-32 lg:px-8"
     >
       <Reveal delay={0}>
-        <SectionLabel index={5}>Recommendations</SectionLabel>
+        <SectionLabel>Recommendations</SectionLabel>
       </Reveal>
 
       <h2 className="sr-only">Testimonials</h2>
@@ -105,9 +105,9 @@ export function Testimonials() {
             {testimonials.map((testimonial, i) => (
               <div
                 key={testimonial.id}
-                className="min-w-0 flex-[0_0_100%] sm:flex-[0_0_calc(50%-10px)] lg:flex-[0_0_calc(33.333%-14px)]"
+                className="flex min-w-0 flex-[0_0_100%] sm:flex-[0_0_calc(50%-10px)] lg:flex-[0_0_calc(33.333%-14px)]"
               >
-                <Reveal delay={0.08 + i * 0.06}>
+                <Reveal delay={0.08 + i * 0.06} className="h-full w-full">
                   <a
                     href={testimonial.linkedinUrl}
                     target="_blank"

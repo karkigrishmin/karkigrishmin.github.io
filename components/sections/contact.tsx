@@ -1,14 +1,57 @@
 'use client'
 
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { Check, Copy } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { contact, personalInfo } from '@/lib/constants'
 import { SectionLabel } from '@/components/primitives/section-label'
 import { Reveal } from '@/components/primitives/reveal'
+import { Button } from '@/components/ui/button'
 
 const SOCIAL_URLS: Record<string, string> = {
   GitHub: personalInfo.github,
   LinkedIn: personalInfo.linkedin,
   Twitter: personalInfo.twitter,
+}
+
+function CopyEmailButton({ email }: { email: string }) {
+  const [copied, setCopied] = useState(false)
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current)
+    }
+  }, [])
+
+  const handleCopy = useCallback(async () => {
+    try {
+      await navigator.clipboard?.writeText(email)
+      setCopied(true)
+      if (timeoutRef.current) clearTimeout(timeoutRef.current)
+      timeoutRef.current = setTimeout(() => setCopied(false), 2000)
+    } catch {
+      // Clipboard unavailable — the mailto link remains the fallback.
+    }
+  }, [email])
+
+  return (
+    <>
+      <Button
+        type="button"
+        variant="ghost"
+        size="icon"
+        onClick={handleCopy}
+        aria-label={copied ? 'Email copied to clipboard' : 'Copy email address'}
+        className="text-muted hover:text-accent-ink hover:bg-foreground/5 size-9 rounded-full transition-colors"
+      >
+        {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+      </Button>
+      <span role="status" aria-live="polite" className="sr-only">
+        {copied ? 'Email copied to clipboard' : ''}
+      </span>
+    </>
+  )
 }
 
 export function Contact() {
@@ -19,7 +62,7 @@ export function Contact() {
         className="relative mx-auto w-full max-w-6xl px-6 py-24 sm:py-32 lg:px-8"
       >
         <Reveal delay={0}>
-          <SectionLabel index={6}>Contact</SectionLabel>
+          <SectionLabel>Contact</SectionLabel>
         </Reveal>
 
         <h2 className="sr-only">Get In Touch</h2>
@@ -43,11 +86,11 @@ export function Contact() {
         </Reveal>
 
         <Reveal delay={0.24}>
-          <div className="mt-10">
+          <div className="mt-10 flex flex-wrap items-center gap-x-3 gap-y-2">
             <a
               href={`mailto:${personalInfo.email}`}
               className={cn(
-                'font-display text-foreground inline-block',
+                'font-display text-foreground inline-block break-all',
                 'text-[clamp(1.15rem,3.5vw,2.25rem)] font-semibold tracking-[-0.02em]',
                 'underline-offset-8 transition-colors duration-200',
                 'hover:text-accent-ink hover:underline'
@@ -55,6 +98,7 @@ export function Contact() {
             >
               {personalInfo.email}
             </a>
+            <CopyEmailButton email={personalInfo.email} />
           </div>
         </Reveal>
 
