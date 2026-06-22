@@ -1,6 +1,11 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { Navigation } from '@/components/navigation'
+import { LensProvider } from '@/lib/lens-context'
+
+function renderWithLens(ui: React.ReactElement) {
+  return render(<LensProvider>{ui}</LensProvider>)
+}
 
 // Mock IntersectionObserver
 global.IntersectionObserver = vi.fn(() => ({
@@ -18,7 +23,7 @@ global.scrollTo = vi.fn()
 
 describe('Navigation', () => {
   it('renders all navigation items', () => {
-    render(<Navigation />)
+    renderWithLens(<Navigation />)
 
     expect(screen.getByText('About')).toBeDefined()
     expect(screen.getByText('Skills')).toBeDefined()
@@ -29,28 +34,28 @@ describe('Navigation', () => {
   })
 
   it('renders logo/initials', () => {
-    render(<Navigation />)
+    renderWithLens(<Navigation />)
 
-    const logo = screen.getByText('GK')
-    expect(logo).toBeDefined()
+    const logo = screen.getByLabelText('Scroll to top')
+    expect(logo.textContent).toMatch(/GK/)
   })
 
   it('has theme toggle button', () => {
-    render(<Navigation />)
+    renderWithLens(<Navigation />)
 
     const themeButton = screen.getByLabelText(/toggle theme/i)
     expect(themeButton).toBeDefined()
   })
 
   it('has mobile menu toggle on small screens', () => {
-    render(<Navigation />)
+    renderWithLens(<Navigation />)
 
     const menuButton = screen.getByLabelText(/toggle mobile menu/i)
     expect(menuButton).toBeDefined()
   })
 
   it('scrolls to top when logo is clicked', () => {
-    render(<Navigation />)
+    renderWithLens(<Navigation />)
 
     const logo = screen.getByLabelText('Scroll to top')
     fireEvent.click(logo)
@@ -64,7 +69,7 @@ describe('Navigation', () => {
   })
 
   it('has accessible navigation structure', () => {
-    const { container } = render(<Navigation />)
+    const { container } = renderWithLens(<Navigation />)
 
     const nav = container.querySelector('nav')
     expect(nav).toBeDefined()
