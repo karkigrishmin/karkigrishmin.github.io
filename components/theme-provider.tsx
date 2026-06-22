@@ -14,8 +14,8 @@ type ThemeProviderProps = {
 export function ThemeProvider({
   children,
   attribute = 'data-theme',
-  defaultTheme = 'light',
-  enableSystem = true,
+  defaultTheme = 'dark',
+  enableSystem = false,
   storageKey = 'grishmin-theme',
   ...props
 }: ThemeProviderProps) {

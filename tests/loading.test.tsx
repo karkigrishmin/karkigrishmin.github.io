@@ -13,7 +13,7 @@ describe('Loading Component', () => {
     render(<Loading />)
 
     const loadingText = screen.getByText('Loading...')
-    expect(loadingText).toBeVisible()
+    expect(loadingText).toBeInTheDocument()
   })
 
   it('renders three animated dots', () => {

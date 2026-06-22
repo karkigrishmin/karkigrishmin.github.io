@@ -1,28 +1,29 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, Space_Grotesk, JetBrains_Mono } from 'next/font/google'
+import { Fraunces, Geist, Geist_Mono } from 'next/font/google'
 import Script from 'next/script'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
+import { LensProvider } from '@/lib/lens-context'
+import { GrainOverlay } from '@/components/primitives/grain-overlay'
+import { CommandPalette } from '@/components/command-palette'
 
-const inter = Inter({
-  variable: '--font-inter',
+const fraunces = Fraunces({
+  variable: '--font-fraunces',
   subsets: ['latin'],
   display: 'swap',
-  weight: ['400', '500', '600', '700'],
+  axes: ['opsz', 'SOFT', 'WONK'],
 })
 
-const spaceGrotesk = Space_Grotesk({
-  variable: '--font-space-grotesk',
+const geist = Geist({
+  variable: '--font-geist',
   subsets: ['latin'],
   display: 'swap',
-  weight: ['600', '700'],
 })
 
-const jetbrainsMono = JetBrains_Mono({
-  variable: '--font-jetbrains-mono',
+const geistMono = Geist_Mono({
+  variable: '--font-geist-mono',
   subsets: ['latin'],
   display: 'swap',
-  weight: ['400', '500'],
 })
 
 export const viewport: Viewport = {
@@ -142,10 +143,14 @@ export default function RootLayout({
           strategy="beforeInteractive"
         />
       </head>
-      <body
-        className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased`}
-      >
-        <ThemeProvider>{children}</ThemeProvider>
+      <body className={`${fraunces.variable} ${geist.variable} ${geistMono.variable} antialiased`}>
+        <ThemeProvider>
+          <LensProvider>
+            <GrainOverlay />
+            {children}
+            <CommandPalette />
+          </LensProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

@@ -15,19 +15,13 @@ export const about = {
   description: [
     'As a Senior Frontend Engineer, I thrive at the intersection of design and code. My expertise lies in transforming Figma designs into pixel-perfect, production-ready applications that users love.',
     'I specialize in building robust component architectures and design systems that scale. My approach combines technical excellence with a deep understanding of user experience, ensuring every interface is not just functional, but delightful.',
-    'Beyond frontend development, I\'m passionate about code quality and testing. I\'ve led initiatives to implement comprehensive testing strategies using Vitest and React Testing Library, significantly improving codebase reliability.',
+    "Beyond frontend development, I'm passionate about code quality and testing. I've led initiatives to implement comprehensive testing strategies using Vitest and React Testing Library, significantly improving codebase reliability.",
     'Recently, I achieved a 39.5% performance improvement by migrating state management to React Query and Zustand. My experience spans both Web2 and Web3 ecosystems—from building decentralized cloud storage platforms on Cardano blockchain to optimizing data-heavy enterprise applications. I focus on delivering measurable results through performance optimization, clean architecture, and modern development practices.',
   ],
 }
 
 export const skills = {
-  'Core Frontend': [
-    'JavaScript (ES6+)',
-    'TypeScript',
-    'React.js',
-    'Next.js',
-    'Svelte / SvelteKit',
-  ],
+  'Core Frontend': ['JavaScript (ES6+)', 'TypeScript', 'React.js', 'Next.js', 'Svelte / SvelteKit'],
   'Styling & Design': [
     'Tailwind CSS',
     'CSS-in-JS',
@@ -65,11 +59,7 @@ export const skills = {
     'Component Libraries',
     'Code Reviews',
   ],
-  'Web3 & Blockchain': [
-    'Cardano',
-    'lucid-cardano',
-    'Web3 Development',
-  ],
+  'Web3 & Blockchain': ['Cardano', 'lucid-cardano', 'Web3 Development'],
 }
 
 export const experience = [
@@ -101,7 +91,16 @@ export const experience = [
       'Developed responsive interfaces with Next.js and TypeScript',
       'Integrated REST APIs and conducted thorough code reviews',
     ],
-    tech: ['Next.js', 'TypeScript', 'Cardano', 'lucid-cardano', 'Tailwind CSS', 'React Query', 'shadcn', 'Web3'],
+    tech: [
+      'Next.js',
+      'TypeScript',
+      'Cardano',
+      'lucid-cardano',
+      'Tailwind CSS',
+      'React Query',
+      'shadcn',
+      'Web3',
+    ],
   },
   {
     company: 'Rara Labs',
@@ -116,7 +115,17 @@ export const experience = [
       'Built scalable React applications with TypeScript and Next.js',
       'Integrated GraphQL APIs and worked with multiple UI libraries',
     ],
-    tech: ['React', 'Next.js', 'TypeScript', 'GraphQL', 'Storybook', 'Jest', 'RTL', 'Tailwind CSS', 'ChakraUI'],
+    tech: [
+      'React',
+      'Next.js',
+      'TypeScript',
+      'GraphQL',
+      'Storybook',
+      'Jest',
+      'RTL',
+      'Tailwind CSS',
+      'ChakraUI',
+    ],
   },
   {
     company: 'AgileData.io',
@@ -145,7 +154,17 @@ export const experience = [
       'Implemented state management with Redux and React Query',
       'Created comprehensive unit tests using Vitest and Jest',
     ],
-    tech: ['SvelteKit', 'Svelte', 'React', 'TypeScript', 'Redux', 'React Query', 'Vitest', 'GraphQL', 'Tailwind CSS'],
+    tech: [
+      'SvelteKit',
+      'Svelte',
+      'React',
+      'TypeScript',
+      'Redux',
+      'React Query',
+      'Vitest',
+      'GraphQL',
+      'Tailwind CSS',
+    ],
   },
   {
     company: 'WsCodeLabs',
@@ -178,6 +197,20 @@ export const projects = [
     ],
     link: 'https://www.qluster.ai/',
     image: '/projects/qluster.jpg',
+    // code-view fields — owner to refine wording
+    stack: [
+      'React',
+      'Next.js',
+      'TypeScript',
+      'React Query',
+      'Zustand',
+      'Vitest',
+      'React Testing Library',
+    ],
+    architectureNote:
+      'State management was migrated from React Context to React Query and Zustand, co-locating server-state caching with UI state and eliminating duplicate API calls across list views.',
+    impact:
+      'The data-trust workflow — quarantine, intelligent matching, and lineage tracking — gives analysts a reliable path from raw CSV/JSON to clean, production-ready datasets.',
   },
   {
     id: 'enthu',
@@ -185,13 +218,27 @@ export const projects = [
     description:
       'Global people-to-people live learning network with 1000+ interactive courses taught by expert instructors. Serves 10,000+ learners across 10+ countries.',
     tech: ['SvelteKit', 'TypeScript', 'Stripe', 'PayPal'],
-    highlights: [
-      '10K+ active learners',
-      'Live interactive courses',
-      'Global learning platform',
-    ],
+    highlights: ['10K+ active learners', 'Live interactive courses', 'Global learning platform'],
     link: 'https://enthu.com/',
     image: '/projects/enthu.jpg',
+    // code-view fields — owner to refine wording
+    stack: [
+      'SvelteKit',
+      'Svelte',
+      'TypeScript',
+      'Svelte Store',
+      'Redux',
+      'React Query',
+      'Stripe',
+      'PayPal',
+      'GraphQL',
+      'Tailwind CSS',
+      'Vitest',
+    ],
+    architectureNote:
+      'Built on SvelteKit with Svelte Store for reactive state, supplemented by a custom Storybook design system and Chrome extensions to extend platform reach beyond the core web app.',
+    impact:
+      'The platform serves 10,000+ learners across 10+ countries through 1,000+ live interactive courses, enabling a global people-to-people learning network.',
   },
   {
     id: 'agiledata',
@@ -199,13 +246,15 @@ export const projects = [
     description:
       'Enterprise data management platform that solves complex data problems with elegant solutions. Provides magical, flexible data workflows for organizations.',
     tech: ['React', 'TypeScript', 'Data Processing'],
-    highlights: [
-      'Enterprise data handling',
-      'Custom data workflows',
-      'Integration solutions',
-    ],
+    highlights: ['Enterprise data handling', 'Custom data workflows', 'Integration solutions'],
     link: 'https://agiledata.io/',
     image: '/projects/agiledata.jpg',
+    // code-view fields — owner to refine wording
+    stack: ['React', 'TypeScript', 'Data Processing'],
+    architectureNote:
+      'Delivered complex data workflow interfaces as a contract engagement, implementing custom data processing and visualization features on top of an existing enterprise platform architecture.',
+    impact:
+      'Provided enterprise organizations with flexible, integrated data workflow capabilities that abstract the complexity of large-scale data management behind an approachable interface.',
   },
   {
     id: 'heliski',
@@ -213,13 +262,15 @@ export const projects = [
     description:
       'Search, compare and book helicopter skiing experiences worldwide. Connects adventure seekers with operators across multiple countries with real-time availability.',
     tech: ['Next.js', 'Redux', 'Google Maps API', 'TypeScript'],
-    highlights: [
-      'Global marketplace',
-      'Real-time booking',
-      'Operator comparison',
-    ],
+    highlights: ['Global marketplace', 'Real-time booking', 'Operator comparison'],
     link: 'https://heliskiinternational.com/',
     image: '/projects/heliski.jpg',
+    // code-view fields — owner to refine wording
+    stack: ['Next.js', 'TypeScript', 'Redux', 'Google Maps API'],
+    architectureNote:
+      'Operator listings, availability, and geographic search are coordinated through Redux global state alongside the Google Maps API, enabling real-time comparison across operators in multiple countries.',
+    impact:
+      'Connects adventure seekers with helicopter skiing operators worldwide through a unified marketplace with real-time availability and side-by-side operator comparison.',
   },
   {
     id: 'iagon',
@@ -227,27 +278,40 @@ export const projects = [
     description:
       'Blockchain-based decentralized cloud storage and computing platform on Cardano. Provides secure, distributed alternative to centralized cloud services.',
     tech: ['Next.js', 'React', 'Cardano', 'Web3'],
-    highlights: [
-      'Decentralized storage',
-      'Blockchain integration',
-      'Web3 cloud solution',
-    ],
+    highlights: ['Decentralized storage', 'Blockchain integration', 'Web3 cloud solution'],
     link: 'https://iagon.com/',
     image: '/projects/iagon.jpg',
+    // code-view fields — owner to refine wording
+    stack: [
+      'Next.js',
+      'TypeScript',
+      'React Query',
+      'lucid-cardano',
+      'Tailwind CSS',
+      'shadcn/ui',
+      'Cardano',
+      'Web3',
+    ],
+    architectureNote:
+      'Web3 wallet integration is handled via the lucid-cardano library, bridging Cardano blockchain transactions into a Next.js frontend while keeping the UI layer decoupled from on-chain logic.',
+    impact:
+      'Delivers a secure, distributed alternative to centralised cloud services by leveraging the Cardano blockchain for decentralised storage and computing.',
   },
   {
     id: 'tigg',
     title: 'Tigg - Cloud Accounting Software',
     description:
-      'Nepal\'s #1 cloud-based ERP and accounting software serving 10,000+ users across 1,500 businesses. Features AI-powered invoice processing and IRD certification.',
+      "Nepal's #1 cloud-based ERP and accounting software serving 10,000+ users across 1,500 businesses. Features AI-powered invoice processing and IRD certification.",
     tech: ['React', 'TypeScript', 'Cloud ERP', 'AI'],
-    highlights: [
-      '10K+ business users',
-      'IRD-certified invoicing',
-      'AI-powered automation',
-    ],
+    highlights: ['10K+ business users', 'IRD-certified invoicing', 'AI-powered automation'],
     link: 'https://www.tiggapp.com/',
     image: '/projects/tigg.jpg',
+    // code-view fields — owner to refine wording
+    stack: ['React', 'TypeScript', 'Cloud ERP', 'AI'],
+    architectureNote:
+      'AI-powered invoice processing is layered onto a cloud ERP core, with IRD certification requirements shaping the data validation and document generation pipeline.',
+    impact:
+      "Serves 10,000+ users across 1,500 businesses as Nepal's #1 cloud accounting platform, automating invoice processing and compliance with IRD certification.",
   },
 ]
 
@@ -258,7 +322,7 @@ export const testimonials = [
     role: 'Founder',
     company: 'Qluster Data',
     quote:
-      'I\'ve had the pleasure of working with Grishmin for over a year as our frontend engineer on an early-stage data platform. He\'s a clear communicator, asks thoughtful questions, cares deeply about the product, and has consistently made himself available across time zones—even when that meant late nights to maximize overlap. On the engineering side, he delivered solid React work and stepped in on a few tricky issues. Over time he leaned into newer workflows (AI-assisted development, stronger testing practices, Playwright) and kept improving. He shines when goals are clear and the feedback loop is tight—he moves quickly, keeps you posted, and gets things across the line.',
+      "I've had the pleasure of working with Grishmin for over a year as our frontend engineer on an early-stage data platform. He's a clear communicator, asks thoughtful questions, cares deeply about the product, and has consistently made himself available across time zones—even when that meant late nights to maximize overlap. On the engineering side, he delivered solid React work and stepped in on a few tricky issues. Over time he leaned into newer workflows (AI-assisted development, stronger testing practices, Playwright) and kept improving. He shines when goals are clear and the feedback loop is tight—he moves quickly, keeps you posted, and gets things across the line.",
     linkedinUrl: 'https://www.linkedin.com/in/sepehr/',
     image: null,
   },
@@ -277,8 +341,7 @@ export const testimonials = [
     name: 'Ravi Shrestha',
     role: 'Web3 Engineer',
     company: 'Iagon',
-    quote:
-      'Highly knowledgeable, deep understanding of what he was doing and a good human being.',
+    quote: 'Highly knowledgeable, deep understanding of what he was doing and a good human being.',
     linkedinUrl: 'https://www.linkedin.com/in/ravi-shrestha-98064b177/',
     image: null,
   },
@@ -288,7 +351,7 @@ export const testimonials = [
     role: 'Frontend Engineer',
     company: 'Iagon',
     quote:
-      'I had the pleasure of working with Grishmin Karki as a frontend developer at NGIT Solutions Pvt. Ltd. He always follows best practices and coding standards, and he\'s very thorough when checking pull requests, making sure everything meets high standards. He\'s genuinely passionate about frontend development and prefers to focus on mastering it rather than moving into other areas. I highly recommend him to any team looking for a dedicated and skilled frontend developer.',
+      "I had the pleasure of working with Grishmin Karki as a frontend developer at NGIT Solutions Pvt. Ltd. He always follows best practices and coding standards, and he's very thorough when checking pull requests, making sure everything meets high standards. He's genuinely passionate about frontend development and prefers to focus on mastering it rather than moving into other areas. I highly recommend him to any team looking for a dedicated and skilled frontend developer.",
     linkedinUrl: 'https://www.linkedin.com/in/anuj-timsina/',
     image: null,
   },
@@ -307,7 +370,7 @@ export const testimonials = [
 export const contact = {
   title: 'Get In Touch',
   description:
-    'I\'m always open to discussing new projects, creative ideas, or opportunities to be part of your vision. Feel free to reach out!',
+    "I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision. Feel free to reach out!",
   email: personalInfo.email,
   social: [
     {
