@@ -1,169 +1,133 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { MapPin, ArrowDown } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
+import { Reveal } from '@/components/primitives/reveal'
+import { MagneticButton } from '@/components/primitives/magnetic-button'
+import { useReducedMotion } from '@/lib/use-reduced-motion'
 import { personalInfo } from '@/lib/constants'
+import { cn } from '@/lib/utils'
 
-const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 },
+const META = ['4+ YRS', 'REACT / NEXT / TS', 'EST. KATHMANDU']
+
+function scrollToSection(id: string) {
+  const element = document.getElementById(id)
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  element?.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' })
 }
 
 export function Hero() {
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id)
-
-    // Respect user's motion preferences for accessibility
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
-    element?.scrollIntoView({
-      behavior: prefersReducedMotion ? 'auto' : 'smooth',
-    })
-  }
+  const reduced = useReducedMotion()
 
   return (
     <section
       id="hero"
-      className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 pt-20 sm:px-6 sm:pt-24 lg:px-8"
+      className="relative flex min-h-screen flex-col justify-center overflow-hidden px-6 pt-28 pb-20 sm:px-8 sm:pt-32 lg:px-12"
     >
-      {/* Background gradient */}
-      <div
-        className="absolute inset-0 -z-10"
-        style={{
-          backgroundImage:
-            'linear-gradient(to bottom right, color-mix(in srgb, var(--primary) 5%, transparent), transparent, color-mix(in srgb, var(--accent) 5%, transparent))',
-        }}
-      />
+      {/* Index marker — editorial masthead touch, pinned top-left of the content well */}
+      <Reveal delay={0.05}>
+        <p className="text-muted mb-10 font-mono text-xs tracking-[0.25em] uppercase sm:mb-14">
+          <span className="text-accent-ink">(01</span>
+          <span className="mx-2 opacity-50">—</span>
+          <span>Intro)</span>
+        </p>
+      </Reveal>
 
-      {/* Floating shapes for visual interest - hidden on mobile to prevent overflow */}
-      <motion.div
-        className="absolute top-20 left-10 -z-10 hidden h-40 w-40 rounded-full blur-3xl sm:block sm:h-56 sm:w-56 md:h-72 md:w-72"
-        style={{
-          backgroundColor: 'color-mix(in srgb, var(--primary) 10%, transparent)',
-        }}
-        animate={{
-          y: [0, -20, 0],
-          scale: [1, 1.1, 1],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
-      />
-      <motion.div
-        className="absolute right-10 bottom-20 -z-10 hidden h-56 w-56 rounded-full blur-3xl sm:block sm:h-72 sm:w-72 md:h-96 md:w-96"
-        style={{
-          backgroundColor: 'color-mix(in srgb, var(--accent) 10%, transparent)',
-        }}
-        animate={{
-          y: [0, 20, 0],
-          scale: [1, 1.2, 1],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
-      />
+      <div className="grid w-full grid-cols-1 gap-y-10 lg:grid-cols-12">
+        {/* Left content well — the masthead lives here; the right breathes */}
+        <div className="lg:col-span-10 xl:col-span-9">
+          {/* Eyebrow: availability + role + location */}
+          <Reveal delay={0.1}>
+            <div className="text-muted flex flex-wrap items-center gap-x-5 gap-y-3 font-mono text-xs tracking-[0.18em] uppercase">
+              <span className="inline-flex items-center gap-2">
+                <span className="relative flex h-1.5 w-1.5">
+                  {!reduced && (
+                    <span className="bg-accent absolute inline-flex h-full w-full animate-ping rounded-full opacity-75" />
+                  )}
+                  <span className="bg-accent relative inline-flex h-1.5 w-1.5 rounded-full" />
+                </span>
+                Available for work
+              </span>
+              <span aria-hidden className="bg-border h-3 w-px" />
+              <span>{personalInfo.role}</span>
+              <span aria-hidden className="bg-border h-3 w-px" />
+              <span className="inline-flex items-center gap-2">
+                <span aria-hidden className="bg-accent h-1.5 w-1.5 rounded-full" />
+                {personalInfo.location}
+              </span>
+            </div>
+          </Reveal>
 
-      <div className="mx-auto max-w-5xl px-2 text-center sm:px-4">
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={fadeIn}
-          transition={{ duration: 0.6 }}
-        >
-          <Badge variant="outline" className="mb-6 px-3 py-1.5 text-sm">
-            <MapPin className="text-primary mr-1 h-3 w-3" />
-            {personalInfo.location}
-          </Badge>
-        </motion.div>
+          {/* The name — hero statement */}
+          <Reveal delay={0.18}>
+            <h1 className="font-display text-foreground mt-7 text-[clamp(2.75rem,9vw,7.5rem)] leading-[0.95] font-semibold tracking-[-0.02em] text-balance sm:mt-9">
+              <span className="block">Grishmin </span>
+              <span className="block">
+                Karki<span className="text-accent-ink">.</span>
+              </span>
+            </h1>
+          </Reveal>
 
-        <motion.h1
-          className="text-foreground mb-6 px-2 text-3xl font-bold sm:text-5xl md:text-6xl lg:text-7xl"
-          initial="hidden"
-          animate="visible"
-          variants={fadeIn}
-          transition={{ duration: 0.6, delay: 0.1 }}
-        >
-          {personalInfo.name}
-        </motion.h1>
+          {/* Tagline */}
+          <Reveal delay={0.28}>
+            <p className="text-muted mt-7 max-w-xl text-lg leading-relaxed text-pretty sm:mt-8 sm:text-xl">
+              {personalInfo.tagline}
+            </p>
+          </Reveal>
 
-        <motion.h2
-          className="text-primary mb-4 px-2 text-xl font-semibold sm:text-2xl md:text-3xl lg:text-4xl"
-          initial="hidden"
-          animate="visible"
-          variants={fadeIn}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          {personalInfo.role}
-        </motion.h2>
-
-        <motion.p
-          className="text-muted mx-auto mb-6 max-w-2xl px-4 text-base sm:text-lg md:text-xl"
-          initial="hidden"
-          animate="visible"
-          variants={fadeIn}
-          transition={{ duration: 0.6, delay: 0.3 }}
-        >
-          {personalInfo.tagline}
-        </motion.p>
-
-        <motion.p
-          className="text-muted mx-auto mb-8 max-w-3xl px-4 text-sm leading-relaxed sm:text-base md:text-lg"
-          initial="hidden"
-          animate="visible"
-          variants={fadeIn}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
-          {personalInfo.bio}
-        </motion.p>
-
-        <motion.div
-          className="mb-16 flex flex-col items-center justify-center gap-3 px-4 sm:mb-20 sm:flex-row sm:gap-4"
-          initial="hidden"
-          animate="visible"
-          variants={fadeIn}
-          transition={{ duration: 0.6, delay: 0.5 }}
-        >
-          <Button
-            size="lg"
-            onClick={() => scrollToSection('projects')}
-            className="w-full min-w-[160px] sm:w-auto"
-          >
-            View My Work
-          </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            onClick={() => scrollToSection('contact')}
-            className="w-full min-w-[160px] sm:w-auto"
-          >
-            Get In Touch
-          </Button>
-        </motion.div>
-
-        {/* Scroll indicator - hidden on short screens */}
-        <motion.div
-          className="absolute bottom-10 left-1/2 hidden -translate-x-1/2 transform min-[600px]:block"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 0.6 }}
-        >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            className="text-muted flex cursor-pointer flex-col items-center gap-2"
-            onClick={() => scrollToSection('about')}
-          >
-            <span className="text-sm font-medium">Scroll to explore</span>
-            <ArrowDown className="h-5 w-5" />
-          </motion.div>
-        </motion.div>
+          {/* CTAs */}
+          <Reveal delay={0.38}>
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:gap-4">
+              <MagneticButton
+                onClick={() => scrollToSection('projects')}
+                className="bg-accent text-accent-foreground w-full px-8 py-3.5 font-medium hover:opacity-90 sm:w-auto"
+              >
+                View work
+                <span aria-hidden className="text-base leading-none">
+                  ↘
+                </span>
+              </MagneticButton>
+              <MagneticButton
+                onClick={() => scrollToSection('contact')}
+                className="border-border text-foreground hover:border-accent hover:text-accent-ink w-full border px-8 py-3.5 font-medium transition-colors sm:w-auto"
+              >
+                Get in touch
+              </MagneticButton>
+            </div>
+          </Reveal>
+        </div>
       </div>
+
+      {/* Masthead meta row — anchored to the bottom rule */}
+      <Reveal delay={0.5}>
+        <div className="border-border text-muted mt-16 flex flex-wrap items-center gap-x-4 gap-y-2 border-t pt-6 font-mono text-xs tracking-[0.18em] uppercase sm:mt-20">
+          {META.map((item, i) => (
+            <span key={item} className="inline-flex items-center gap-4">
+              {i > 0 && <span aria-hidden className="bg-accent h-1 w-1 rounded-full" />}
+              {item}
+            </span>
+          ))}
+        </div>
+      </Reveal>
+
+      {/* Scroll cue */}
+      <button
+        type="button"
+        onClick={() => scrollToSection('about')}
+        aria-label="Scroll to about section"
+        className={cn(
+          'group absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2',
+          'text-muted font-mono text-[0.625rem] tracking-[0.3em] uppercase',
+          'hover:text-accent-ink transition-colors min-[640px]:flex'
+        )}
+      >
+        <span>Scroll</span>
+        <motion.span
+          aria-hidden
+          className="bg-border group-hover:bg-accent block h-8 w-px origin-top"
+          animate={reduced ? undefined : { scaleY: [0.3, 1, 0.3] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+        />
+      </button>
     </section>
   )
 }
