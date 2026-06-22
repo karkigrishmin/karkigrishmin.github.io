@@ -5,63 +5,23 @@ import { skills } from '@/lib/constants'
 import { SectionLabel } from '@/components/primitives/section-label'
 import { Reveal } from '@/components/primitives/reveal'
 
-const BENTO_CONFIG: Record<string, { index: string; gridClass: string; padClass: string }> = {
-  'Core Frontend': {
-    index: '01',
-    gridClass: 'lg:col-span-2 lg:row-span-2',
-    padClass: 'p-8 sm:p-10',
-  },
-  'Styling & Design': {
-    index: '02',
-    gridClass: 'lg:col-span-1',
-    padClass: 'p-6',
-  },
-  'State & Data': {
-    index: '03',
-    gridClass: 'lg:col-span-1',
-    padClass: 'p-6',
-  },
-  'Testing & Quality': {
-    index: '04',
-    gridClass: 'lg:col-span-2',
-    padClass: 'p-6 sm:p-8',
-  },
-  'Tools & Practices': {
-    index: '05',
-    gridClass: 'lg:col-span-1',
-    padClass: 'p-6',
-  },
-  'Web3 & Blockchain': {
-    index: '06',
-    gridClass: 'lg:col-span-1',
-    padClass: 'p-6',
-  },
-}
-
-interface BentoCellProps {
+interface SkillCellProps {
   category: string
   skillList: string[]
   delay: number
 }
 
-function BentoCell({ category, skillList, delay }: BentoCellProps) {
-  const config = BENTO_CONFIG[category] ?? {
-    index: '??',
-    gridClass: '',
-    padClass: 'p-6',
-  }
-
+function SkillCell({ category, skillList, delay }: SkillCellProps) {
   return (
-    <Reveal delay={delay} className={config.gridClass}>
+    <Reveal delay={delay} className="h-full">
       <div
         className={cn(
-          'group bg-surface border-border h-full rounded-xl border',
-          'hover:bg-foreground/[0.02] hover:border-foreground/[0.12] transition-colors duration-300',
-          config.padClass
+          'group bg-surface border-border h-full rounded-xl border p-6 sm:p-8',
+          'hover:bg-foreground/[0.02] hover:border-foreground/[0.12] transition-colors duration-300'
         )}
       >
         <p className="text-muted mb-5 flex items-center gap-2.5 font-mono text-xs tracking-[0.18em] uppercase">
-          <span className="text-accent-ink opacity-60">[{config.index}]</span>
+          <span aria-hidden="true" className="bg-accent h-1.5 w-1.5 rounded-full opacity-70" />
           <span>{category}</span>
         </p>
 
@@ -86,14 +46,14 @@ function BentoCell({ category, skillList, delay }: BentoCellProps) {
 export function Skills() {
   const entries = Object.entries(skills)
 
-  const delays = [0, 0.08, 0.12, 0.1, 0.18, 0.22]
+  const delays = [0, 0.06, 0.12, 0.08, 0.14, 0.2]
 
   return (
     <section id="skills" className="relative mx-auto w-full max-w-6xl px-6 py-24 sm:py-32 lg:px-8">
       <h2 className="sr-only">Skills</h2>
 
       <Reveal delay={0}>
-        <SectionLabel index={2}>Skills</SectionLabel>
+        <SectionLabel>Skills</SectionLabel>
       </Reveal>
 
       <Reveal delay={0.05}>
@@ -111,7 +71,7 @@ export function Skills() {
 
       <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
         {entries.map(([category, skillList], i) => (
-          <BentoCell
+          <SkillCell
             key={category}
             category={category}
             skillList={skillList}

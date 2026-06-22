@@ -112,7 +112,6 @@ function ProjectMotif({ project, isEven }: { project: Project; isEven: boolean }
 }
 
 function ProjectRow({ project, index }: { project: Project; index: number }) {
-  const label = String(index + 1).padStart(2, '0')
   const isEven = index % 2 === 0
 
   return (
@@ -131,18 +130,6 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
 
         {/* Text block — alternates sides on lg */}
         <div className={cn('min-w-0', isEven ? 'lg:order-last' : 'lg:order-first')}>
-          {/* Row index */}
-          <span
-            aria-hidden="true"
-            className={cn(
-              'mb-5 block font-mono text-4xl leading-none font-light tracking-[-0.04em] tabular-nums',
-              'text-muted/80 transition-colors duration-300',
-              'group-hover:text-accent-ink'
-            )}
-          >
-            {label}
-          </span>
-
           {/* Title */}
           <h3
             className={cn(
@@ -226,7 +213,7 @@ export function Projects() {
       <h2 className="sr-only">Projects</h2>
 
       <Reveal delay={0}>
-        <SectionLabel index={4}>Projects</SectionLabel>
+        <SectionLabel>Projects</SectionLabel>
       </Reveal>
 
       <AnimatePresence mode="wait" initial={false}>
