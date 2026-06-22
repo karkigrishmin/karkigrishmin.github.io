@@ -133,7 +133,7 @@ export function Experience() {
       <h2 className="sr-only">Experience</h2>
 
       <Reveal delay={0}>
-        <SectionLabel index={3}>Experience</SectionLabel>
+        <SectionLabel>Experience</SectionLabel>
       </Reveal>
 
       <AnimatePresence mode="wait" initial={false}>

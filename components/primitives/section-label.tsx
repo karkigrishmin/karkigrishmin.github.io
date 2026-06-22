@@ -1,12 +1,11 @@
 import { cn } from '@/lib/utils'
 
 interface SectionLabelProps {
-  index: number
   children: React.ReactNode
   className?: string
 }
 
-export function SectionLabel({ index, children, className }: SectionLabelProps) {
+export function SectionLabel({ children, className }: SectionLabelProps) {
   return (
     <div
       className={cn(
@@ -14,8 +13,8 @@ export function SectionLabel({ index, children, className }: SectionLabelProps) 
         className
       )}
     >
-      <span className="text-accent-ink">{String(index).padStart(2, '0')}</span>
-      <span className="bg-border h-px w-8" aria-hidden="true" />
+      <span aria-hidden="true" className="bg-accent h-1.5 w-1.5 rounded-full" />
+      <span aria-hidden="true" className="bg-border h-px w-8" />
       <span>{children}</span>
     </div>
   )

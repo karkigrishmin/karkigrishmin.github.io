@@ -43,7 +43,7 @@ export function About() {
       <h2 className="sr-only">About</h2>
 
       <Reveal delay={0}>
-        <SectionLabel index={1}>About</SectionLabel>
+        <SectionLabel>About</SectionLabel>
       </Reveal>
 
       <AnimatePresence mode="wait" initial={false}>
