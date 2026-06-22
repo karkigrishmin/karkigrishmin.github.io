@@ -5,9 +5,18 @@ import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { useReducedMotion } from '@/lib/use-reduced-motion'
 
-interface MagneticButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  strength?: number
-}
+type MagneticButtonProps = Omit<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  | 'onDrag'
+  | 'onDragStart'
+  | 'onDragEnd'
+  | 'onDragEnter'
+  | 'onDragLeave'
+  | 'onDragOver'
+  | 'onAnimationStart'
+  | 'onAnimationEnd'
+  | 'onAnimationIteration'
+> & { strength?: number }
 
 export function MagneticButton({
   children,

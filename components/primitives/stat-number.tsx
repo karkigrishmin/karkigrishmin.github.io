@@ -27,6 +27,10 @@ export function StatNumber({
   const [display, setDisplay] = useState(reduced ? value : 0)
 
   useEffect(() => {
+    if (reduced) setDisplay(value)
+  }, [reduced, value])
+
+  useEffect(() => {
     if (reduced || !inView) return
     let raf = 0
     let start = 0
