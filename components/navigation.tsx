@@ -93,7 +93,7 @@ export function Navigation() {
           {/* Monogram */}
           <motion.button
             onClick={scrollToTop}
-            className="text-foreground hover:text-accent-ink rounded-full px-2.5 py-1 font-mono text-base font-bold tracking-widest uppercase transition-colors duration-200 sm:text-lg"
+            className="text-foreground hover:text-accent-ink rounded-full px-2.5 py-2 font-mono text-base font-bold tracking-widest uppercase transition-colors duration-200 sm:py-1 sm:text-lg"
             whileHover={reduced ? undefined : { scale: 1.04 }}
             whileTap={reduced ? undefined : { scale: 0.95 }}
             aria-label="Scroll to top"
@@ -149,7 +149,7 @@ export function Navigation() {
             <Button
               variant="ghost"
               size="icon"
-              className="hover:bg-foreground/5 size-9 rounded-full transition-colors duration-200 md:hidden"
+              className="hover:bg-foreground/5 size-11 rounded-full transition-colors duration-200 md:hidden"
               onClick={() => setIsMobileMenuOpen((v) => !v)}
               aria-label="Toggle mobile menu"
             >

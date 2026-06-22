@@ -136,7 +136,7 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
             aria-hidden="true"
             className={cn(
               'mb-5 block font-mono text-4xl leading-none font-light tracking-[-0.04em] tabular-nums',
-              'text-border transition-colors duration-300',
+              'text-muted/80 transition-colors duration-300',
               'group-hover:text-accent-ink'
             )}
           >

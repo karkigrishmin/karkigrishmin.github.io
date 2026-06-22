@@ -45,7 +45,7 @@ function ExperienceRow({ entry, index, delay }: ExperienceRowProps) {
             aria-hidden="true"
             className={cn(
               'font-mono text-4xl leading-none font-light tracking-[-0.04em] tabular-nums',
-              'text-border transition-colors duration-300',
+              'text-muted/80 transition-colors duration-300',
               'group-hover:text-accent-ink'
             )}
           >

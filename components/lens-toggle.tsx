@@ -22,7 +22,7 @@ export function LensToggle({ className }: { className?: string }) {
     >
       <span
         className={cn(
-          'relative z-10 px-3 py-1.5 transition-colors duration-300',
+          'relative z-10 px-3 py-2.5 transition-colors duration-300 sm:py-1.5',
           !isCode ? 'text-foreground' : 'text-muted'
         )}
       >
@@ -31,7 +31,7 @@ export function LensToggle({ className }: { className?: string }) {
       <span className="text-border relative z-10">|</span>
       <span
         className={cn(
-          'relative z-10 px-3 py-1.5 transition-colors duration-300',
+          'relative z-10 px-3 py-2.5 transition-colors duration-300 sm:py-1.5',
           isCode ? 'text-foreground' : 'text-muted'
         )}
       >
