@@ -1,150 +1,85 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
-import { useReducedMotion } from '@/lib/use-reduced-motion'
-import { CodeLine, CodePanel, Key, Punc, Str } from './code-panel'
+import { cn } from '@/lib/utils'
+import { GrishminCard } from './grishmin-card'
 
-interface CodeRow {
-  indent: number
-  node: React.ReactNode
+function scrollToSection(id: string) {
+  const element = document.getElementById(id)
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  element?.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' })
 }
 
-const ROWS: CodeRow[] = [
-  { indent: 0, node: <Key>{'// grishmin.ts'}</Key> },
-  {
-    indent: 0,
-    node: (
-      <>
-        <span className="text-accent-ink">const grishmin</span> <Punc>=</Punc> {'{'}
-      </>
-    ),
-  },
-  {
-    indent: 2,
-    node: (
-      <>
-        role<Punc>:</Punc> <Str>{"'Senior Frontend Engineer'"}</Str>
-        <Punc>,</Punc>
-      </>
-    ),
-  },
-  {
-    indent: 2,
-    node: (
-      <>
-        location<Punc>:</Punc> <Str>{"'Kathmandu, Nepal'"}</Str>
-        <Punc>,</Punc>
-      </>
-    ),
-  },
-  {
-    indent: 2,
-    node: (
-      <>
-        experience<Punc>:</Punc> <Str>{"'4+ years'"}</Str>
-        <Punc>,</Punc>
-      </>
-    ),
-  },
-  {
-    indent: 2,
-    node: (
-      <>
-        focus<Punc>:</Punc> <Punc>[</Punc>
-        <Str>{"'design systems'"}</Str>
-        <Punc>,</Punc> <Str>{"'performance'"}</Str>
-        <Punc>,</Punc> <Str>{"'testing'"}</Str>
-        <Punc>]</Punc>
-        <Punc>,</Punc>
-      </>
-    ),
-  },
-  {
-    indent: 2,
-    node: (
-      <>
-        stack<Punc>:</Punc> <Punc>[</Punc>
-        <Str>{"'React'"}</Str>
-        <Punc>,</Punc> <Str>{"'Next.js'"}</Str>
-        <Punc>,</Punc> <Str>{"'TypeScript'"}</Str>
-        <Punc>,</Punc> <Str>{"'Svelte'"}</Str>
-        <Punc>]</Punc>
-        <Punc>,</Punc>
-      </>
-    ),
-  },
-  {
-    indent: 2,
-    node: (
-      <>
-        available<Punc>:</Punc> <Punc>true</Punc>
-        <Punc>,</Punc>
-      </>
-    ),
-  },
-  {
-    indent: 0,
-    node: (
-      <>
-        {'}'} <Punc>satisfies</Punc> Engineer
-      </>
-    ),
-  },
+const CALLS = [
+  { method: 'viewWork', target: 'projects', label: 'View my work' },
+  { method: 'getInTouch', target: 'contact', label: 'Get in touch' },
+] as const
+
+interface DocLine {
+  text: string
+  tone?: 'name' | 'accent'
+}
+
+const DOC_LINES: DocLine[] = [
+  { text: '/**' },
+  { text: ' * Grishmin Karki', tone: 'name' },
+  { text: ' * Senior Frontend Engineer', tone: 'accent' },
+  { text: ' *' },
+  { text: ' * Crafting pixel-perfect, accessible' },
+  { text: ' * web experiences with modern tech.' },
+  { text: ' */' },
 ]
 
 export function HeroCode() {
-  const reduced = useReducedMotion()
-  // Number of rows currently revealed. Starts fully revealed under reduced motion.
-  const [revealed, setRevealed] = useState(() => (reduced ? ROWS.length : 0))
-
-  useEffect(() => {
-    if (reduced) {
-      setRevealed(ROWS.length)
-      return
-    }
-    setRevealed(0)
-    let current = 0
-    const interval = window.setInterval(() => {
-      current += 1
-      setRevealed(current)
-      if (current >= ROWS.length) window.clearInterval(interval)
-    }, 90)
-    return () => window.clearInterval(interval)
-  }, [reduced])
-
   return (
-    <CodePanel filename="grishmin.ts" className="max-w-2xl">
-      <pre className="m-0">
-        <code>
-          {ROWS.map((row, i) => {
-            const isVisible = i < revealed
-            const line = (
-              <CodeLine indent={row.indent}>
-                {row.node}
-                {!reduced && i === revealed - 1 && (
-                  <span
-                    aria-hidden="true"
-                    className="bg-accent ml-0.5 inline-block h-[1em] w-[0.5ch] translate-y-[0.12em] animate-pulse"
-                  />
-                )}
-              </CodeLine>
-            )
-            if (reduced) return <div key={i}>{line}</div>
-            return (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: isVisible ? 1 : 0 }}
-                transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-                aria-hidden={!isVisible}
-              >
-                {line}
-              </motion.div>
-            )
-          })}
-        </code>
-      </pre>
-    </CodePanel>
+    <div className="grid w-full grid-cols-1 items-center gap-y-10 lg:grid-cols-12 lg:gap-x-10 xl:gap-x-14">
+      {/* Left: the masthead, as a doc comment */}
+      <div className="lg:col-span-7">
+        <div className="font-mono text-[clamp(0.875rem,1.6vw,1.4rem)] leading-[1.7]">
+          {DOC_LINES.map((line, i) => (
+            <div
+              key={i}
+              className={cn(
+                'whitespace-pre',
+                line.tone === 'name'
+                  ? 'text-foreground'
+                  : line.tone === 'accent'
+                    ? 'text-accent-ink'
+                    : 'text-muted'
+              )}
+            >
+              {line.text || ' '}
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-8 flex flex-col items-start gap-2.5">
+          {CALLS.map(({ method, target, label }) => (
+            <button
+              key={method}
+              type="button"
+              onClick={() => scrollToSection(target)}
+              aria-label={label}
+              className="group focus-visible:outline-accent inline-flex w-fit items-center gap-2 font-mono text-sm focus-visible:outline-2 focus-visible:outline-offset-4 sm:text-base"
+            >
+              <span aria-hidden="true" className="text-accent-ink opacity-60">
+                {'>'}
+              </span>
+              <span className="text-muted group-hover:text-foreground transition-colors duration-200">
+                grishmin.
+                <span className="text-accent-ink underline-offset-4 group-hover:underline">
+                  {method}
+                </span>
+                ()
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Right: the same identity, as data — shares the slot with the design card */}
+      <div className="lg:col-span-5">
+        <GrishminCard />
+      </div>
+    </div>
   )
 }

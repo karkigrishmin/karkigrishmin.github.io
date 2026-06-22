@@ -5,6 +5,7 @@ import { Reveal } from '@/components/primitives/reveal'
 import { MagneticButton } from '@/components/primitives/magnetic-button'
 import { InteractiveName } from '@/components/primitives/interactive-name'
 import { HeroCode } from '@/components/code-view/hero-code'
+import { GrishminCard } from '@/components/code-view/grishmin-card'
 import { useLens } from '@/lib/lens-context'
 import { useReducedMotion } from '@/lib/use-reduced-motion'
 import { personalInfo } from '@/lib/constants'
@@ -27,15 +28,6 @@ export function Hero() {
       id="hero"
       className="relative flex min-h-screen flex-col justify-center overflow-hidden px-6 pt-28 pb-20 sm:px-8 sm:pt-32 lg:px-12"
     >
-      {/* Index marker — editorial masthead touch, pinned top-left of the content well */}
-      <Reveal delay={0.05}>
-        <p className="text-muted mb-10 font-mono text-xs tracking-[0.25em] uppercase sm:mb-14">
-          <span className="text-accent-ink">(01</span>
-          <span className="mx-2 opacity-50">—</span>
-          <span>Intro)</span>
-        </p>
-      </Reveal>
-
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={lens}
@@ -74,12 +66,12 @@ export function Hero() {
 function HeroDesign({ reduced }: { reduced: boolean }) {
   return (
     <>
-      <div className="grid w-full grid-cols-1 gap-y-10 lg:grid-cols-12">
-        {/* Left content well — the masthead lives here; the right breathes */}
-        <div className="lg:col-span-10 xl:col-span-9">
+      <div className="grid w-full grid-cols-1 items-center gap-y-12 lg:grid-cols-12 lg:gap-x-10 xl:gap-x-14">
+        {/* Left content well — the editorial masthead */}
+        <div className="lg:col-span-7">
           {/* Eyebrow: availability + role + location */}
           <Reveal delay={0.1}>
-            <div className="text-muted flex flex-wrap items-center gap-x-5 gap-y-3 font-mono text-xs tracking-[0.18em] uppercase">
+            <div className="text-muted flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-xs tracking-[0.18em] uppercase">
               <span className="inline-flex items-center gap-2">
                 <span className="relative flex h-1.5 w-1.5">
                   {!reduced && (
@@ -89,9 +81,9 @@ function HeroDesign({ reduced }: { reduced: boolean }) {
                 </span>
                 Available for work
               </span>
-              <span aria-hidden className="bg-border h-3 w-px" />
+              <span aria-hidden className="bg-border hidden h-3 w-px sm:block" />
               <span>{personalInfo.role}</span>
-              <span aria-hidden className="bg-border h-3 w-px" />
+              <span aria-hidden className="bg-border hidden h-3 w-px sm:block" />
               <span className="inline-flex items-center gap-2">
                 <span aria-hidden className="bg-accent h-1.5 w-1.5 rounded-full" />
                 {personalInfo.location}
@@ -103,7 +95,7 @@ function HeroDesign({ reduced }: { reduced: boolean }) {
           <Reveal delay={0.18}>
             <h1
               aria-label={personalInfo.name}
-              className="font-display text-foreground mt-7 text-[clamp(2.75rem,9vw,7.5rem)] leading-[0.95] font-semibold tracking-[-0.02em] text-balance sm:mt-9"
+              className="font-display text-foreground mt-7 text-[clamp(2.75rem,7vw,5.5rem)] leading-[0.95] font-semibold tracking-[-0.02em] text-balance sm:mt-9"
             >
               <span className="block">
                 <InteractiveName text="Grishmin" aria-hidden />
@@ -143,6 +135,13 @@ function HeroDesign({ reduced }: { reduced: boolean }) {
                 Get in touch
               </MagneticButton>
             </div>
+          </Reveal>
+        </div>
+
+        {/* Right: the same identity, expressed as code — anchors the masthead */}
+        <div className="hidden lg:col-span-5 lg:block">
+          <Reveal delay={0.3}>
+            <GrishminCard />
           </Reveal>
         </div>
       </div>

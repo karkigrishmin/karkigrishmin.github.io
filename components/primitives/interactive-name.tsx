@@ -45,6 +45,19 @@ function Glyph({ char, wrapperRef, index, interactive }: GlyphProps) {
     rawW.set(0)
   }, [rawY, rawW])
 
+  // One-time entrance: a subtle weight breathe sweeps across the glyphs once the
+  // hero has settled, hinting that the name responds to the pointer.
+  useEffect(() => {
+    if (!interactive) return
+    const start = 1100 + index * 55
+    const up = window.setTimeout(() => rawW.set(0.55), start)
+    const down = window.setTimeout(() => rawW.set(0), start + 220)
+    return () => {
+      window.clearTimeout(up)
+      window.clearTimeout(down)
+    }
+  }, [interactive, index, rawW])
+
   useEffect(() => {
     if (!interactive) return
     const wrapper = wrapperRef.current
