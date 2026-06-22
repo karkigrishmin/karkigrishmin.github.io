@@ -1,0 +1,51 @@
+name: Deploy dev preview (/dev)
+
+# Manual only. Pick the branch in the "Run workflow" dropdown, or type one in the
+# `branch` input to build any branch even if it doesn't carry this workflow file.
+# Every run publishes to one stable URL: https://karkigrishmin.github.io/dev/
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to build (blank = the branch this run was launched from)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+concurrency:
+  group: 'gh-pages'
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch || github.ref }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build with Next.js (under /dev)
+        run: npm run build
+        env:
+          NODE_ENV: production
+          PAGES_BASE_PATH: /dev
+
+      - name: Deploy to gh-pages /dev
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: out
+          branch: gh-pages
+          target-folder: dev
+          clean: true
